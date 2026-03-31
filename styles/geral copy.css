@@ -1,0 +1,570 @@
+   a.menu:link  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: white;
+  }
+
+  a.menu:active  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: white;
+  }
+
+  a.menu:visited  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: white;
+  }
+
+  a.menu:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: gray;
+  }
+
+  a.menu2:link  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: blue;
+  }
+
+  a.menu2:active  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: blue;
+  }
+
+  a.menu2:visited  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: blue;
+  }
+
+  a.menu2:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bold;
+  text-decoration: none;
+  color: gray;
+  }
+
+  a.noticia:link  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  text-decoration: none;
+  color: black;
+  }
+
+  a.noticia:active  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  text-decoration: none;
+  color: black;
+  }
+
+  a.noticia:visited  {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  text-decoration: none;
+  color: black;
+  }
+
+  a.noticia:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  text-decoration: none;
+  color: black;
+  }
+
+  a.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bolder;
+  text-decoration: none;
+  color: blue;
+  }
+
+a.texto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 11.0pt;
+  font-style : normal;
+  font-weight : bolder;
+  text-decoration: none;
+  color: blue;
+  }
+  
+  a.texto-normal {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  font-weight : bolder;
+  text-decoration: none;
+  color: black;
+  }
+
+ a.hiperlink-1 {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size : 9.0pt;
+   font-style : normal;
+   font-weight : bolder;
+   text-decoration: none;
+   color: #4f6b72;
+ } 
+  
+  p.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  }
+
+  p.texto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 12.0pt;
+  font-style : normal;
+  }
+
+  p.titulo {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 10pt;
+  font-style : normal;
+  }
+
+p.altura01 {
+    line-height:30px;
+}  
+  
+  td.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  }
+
+  td.texto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 7.5pt;
+  font-style : normal;
+  }
+
+  td.FMTtexto1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 14pt;
+  font-style : normal;
+  font-weight : bolder;
+  color: blue;
+  }
+
+  font.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  }
+
+  font.texto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 11pt;
+  font-style : normal;
+  }
+
+  font.FMTtexto1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 14pt;
+  font-style : normal;
+  font-weight : bolder;
+  color: blue;
+  }
+
+  font.FMTtexto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 12pt;
+  font-style : normal;
+  font-weight : bolder;
+  color: blue;
+  }
+
+  b.texto-branco {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  color: white;
+  }
+
+  b.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  }
+
+  b.texto-azul {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  color: blue;
+  }
+
+  ul.texto {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 9.0pt;
+  font-style : normal;
+  }
+
+  ul.texto2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 11pt;
+  font-style : normal;
+  }
+
+.cordemilho {
+	font-family: "Times New Roman", Times, serif;
+	color: #66CC99;
+}
+
+
+/*=================================================================================*/
+/* TABELA Tipo 01                                                                  */
+/*=================================================================================*/
+table.tipo01 {
+    border: 0pt;
+    width:  100%;
+}
+table.tipo01 tr {
+   background-color: #80FFFF;
+}
+
+table.tipo01 th {
+   background-color: #DDAAAA;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 02 - feita pelo Leo                                                                  */
+/*=================================================================================*/
+table.tipo02 {
+    border: 0pt;
+}
+table.tipo02 tr {
+    font: bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+/*text-transform: uppercase;  */
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA url(../pcenimg/images/bg_header.jpg) no-repeat;
+    background-color: #80FFFF;
+}
+table.tipo02 th {
+    border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa no-repeat;
+	font: bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    background-color: #DDAAAA;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 02semborda                                                          */
+/*=================================================================================*/
+table.tipo02semborda {
+    border: 0pt;
+}
+table.tipo02semborda tr {
+    font: bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-right: 0px solid #C1DAD7;
+	border-bottom: 0px solid #C1DAD7;
+	border-top: 0px solid #C1DAD7;
+	letter-spacing: 2px;
+/*text-transform: uppercase;  */
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA url(../pcenimg/images/bg_header.jpg) no-repeat;
+    background-color: #80FFFF;
+}
+
+table.tipo02semborda th {
+    border-left: 0px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa no-repeat;
+	font: bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    background-color: #DDAAAA;
+}
+
+table.tipo02semborda td {
+    border-left:      0px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     0px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    0px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       0px solid #E6EAE9;  /*#C1DAD7; */
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #80FFFF;
+}
+
+
+/*=================================================================================*/
+/* TABELA Tipo 03 - feita pelo Leo                                                                  */
+/*=================================================================================*/
+table.tipo03 {
+   background:#cccccc;
+   border-collapse: collapse;
+}
+
+table.tipo03 td {
+   background:#f0ffff;
+   border:1px solid #87ceeb;
+   font: 16px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 03_semborda                                                         */
+/*=================================================================================*/
+table.tipo03semborda {
+   background:#cccccc;
+   border-collapse: collapse;
+}
+
+table.tipo03semborda td {
+   background:#f0ffff;
+   border:0px solid #87ceeb;
+   font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+/*=================================================================================*/
+/* TABELA Tipo 04                                                                  */
+/*=================================================================================*/
+table.tipo04 {
+    border: 0pt;
+}
+table.tipo04 tr {
+   background-color: #80FFFF;
+}
+
+table.tipo04 th {
+   background-color: #DDAAAA;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 05 - cópia da tabela feita pelo Leo                                                                  */
+/*=================================================================================*/
+table.tipo05 {
+   background:#cccccc;
+   border-collapse: collapse;
+}
+
+table.tipo05 td {
+   background:#ffffc8;
+   border:1px solid #87ceeb;
+   font: 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+/*=================================================================================*/
+
+
+/*=================================================================================*/
+/* TABELA Tipo 06 - cópia da tabela feita pelo Leo                                                                  */
+/*=================================================================================*/
+table.tipo06 {
+   background:#cccccc;
+   border-collapse: collapse;
+}
+
+table.tipo06 td {
+   background:#fff0ff;
+   border:1px solid #87ceeb;
+   font: 16px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+table.tipo06 th {
+    border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa no-repeat;
+	font: bold 16px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    background-color: #DDAAAA;
+}
+
+/*=================================================================================*/
+
+/*=================================================================================*/
+/* TABELA Tipo 07 - adaptada de Tipo02                                             */
+/*=================================================================================*/
+table.tipo07 {
+    border: 0pt;
+}
+table.tipo07 tr {
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    border-right:     1px solid #C1DAD7;
+    border-bottom:    1px solid #C1DAD7;
+    border-top:       1px solid #C1DAD7;
+    letter-spacing:   2px;
+    /*text-transform: uppercase;  */
+    text-align:       left;
+    padding:          6px 6px 6px 12px;
+/*    background: #CAE8EA url(../jrgnimg/images/bg_header.jpg) no-repeat;  */
+    background-color: #fff0ff;
+}
+
+table.tipo07 th {
+    border-left:      1px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     1px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    1px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       1px solid #E6EAE9;
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #DDAAAA;
+}
+
+table.tipo07 td {
+    border-left:      1px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     1px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    1px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       1px solid #E6EAE9;  /*#C1DAD7; */
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #fff0ff;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 07a - TD não possui contorno...                                                                  */
+/*=================================================================================*/
+table.tipo07a {
+    border: 0pt;
+}
+table.tipo07a tr {
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    border-right:     1px solid #C1DAD7;
+    border-bottom:    1px solid #C1DAD7;
+    border-top:       1px solid #C1DAD7;
+    letter-spacing:   2px;
+    /*text-transform: uppercase;  */
+    text-align:       left;
+    padding:          6px 6px 6px 12px;
+/*    background: #CAE8EA url(../jrgnimg/images/bg_header.jpg) no-repeat;  */
+    background-color: #fff0ff;
+}
+
+table.tipo07a th {
+    border-left:      1px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     1px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    1px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       1px solid #E6EAE9;
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #DDAAAA;
+}
+
+table.tipo07a td {
+    border-left:      0px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     0px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    0px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       0px solid #E6EAE9;  /*#C1DAD7; */
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #fff0ff;
+}
+
+/*=================================================================================*/
+/* TABELA Tipo 07b - TH e TD não possuem contorno...                                                                  */
+/*=================================================================================*/
+table.tipo07b {
+    border: 0pt;
+}
+table.tipo07b tr {
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    border-right:     1px solid #C1DAD7;
+    border-bottom:    1px solid #C1DAD7;
+    border-top:       1px solid #C1DAD7;
+    letter-spacing:   2px;
+    /*text-transform: uppercase;  */
+    text-align:       left;
+    padding:          6px 6px 6px 12px;
+/*    background: #CAE8EA url(../jrgnimg/images/bg_header.jpg) no-repeat;  */
+    background-color: #fff0ff;
+}
+
+table.tipo07b th {
+    border-left:      0px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     0px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    0px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       0px solid #E6EAE9;
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #DDAAAA;
+}
+
+table.tipo07b td {
+    border-left:      0px solid #E6EAE9;  /*#C1DAD7; */
+    border-right:     0px solid #E6EAE9;  /*#C1DAD7; */
+    border-bottom:    0px solid #E6EAE9;  /*#C1DAD7; */
+    border-top:       0px solid #E6EAE9;  /*#C1DAD7; */
+    /*border-top:       0; */
+    background:       #f5fafa no-repeat;
+    font:             bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    color:            #000000;
+    background-color: #fff0ff;
+}
+
+/*=================================================================================*/
+/* DIV Tipo01                                                                      */
+/*=================================================================================*/
+div.tipo01 {
+height: 70px;
+width: 500px;
+overflow: auto;
+border: 1px solid #666;
+background-color: #f0ffff;
+padding: 8px;
+}
+
+/*=================================================================================*/
+/* TextArea Tipo01                                                                 */
+/*=================================================================================*/
+
+textarea#ta_css_tipo01 {
+	border:      3px solid #cccccc;
+	padding:     5px;
+	font-family: Tahoma, sans-serif;
+        font:        bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+        color:  #0000FF;
+}
