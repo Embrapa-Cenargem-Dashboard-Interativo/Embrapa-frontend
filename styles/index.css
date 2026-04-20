@@ -1,0 +1,9 @@
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(124, 210, 181);
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+}
