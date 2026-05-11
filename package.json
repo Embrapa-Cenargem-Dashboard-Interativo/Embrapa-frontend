@@ -1,0 +1,25 @@
+{
+  "name": "embrapa-cenargen",
+  "version": "1.0.0",
+  "description": "Sistema de gerenciamento de estufas e reservas da Embrapa Cenargen",
+  "author": "Embrapa",
+  "license": "MIT",
+  "scripts": {
+    "dev": "http-server . -p 8080 -o",
+    "start": "http-server . -p 8080",
+    "serve": "serve -l 3000",
+    "live": "live-server --port=5500"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
+    "serve": "^14.2.0"
+  },
+  "keywords": [
+    "embrapa",
+    "cenargen",
+    "estufas",
+    "reservas",
+    "agricultura"
+  ]
+}

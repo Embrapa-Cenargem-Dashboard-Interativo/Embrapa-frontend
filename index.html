@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cenargen · Embrapa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<!-- Estilos Componentes -->
+<link rel="stylesheet" href="styles/geral.css">
+<link rel="stylesheet" href="styles/components/calendar.css">
+<link rel="stylesheet" href="styles/components/dashboard.css">
+<link rel="stylesheet" href="styles/components/sidebar.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-seedling"></i></div>
+      Cenargen
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn active" id="btn-nav-mapa" onclick="showView('mapa')">
+      <i class="fa-solid fa-map-location-dot"></i> Mapa
+    </button>
+    <button class="nav-btn" id="btn-nav-dashboard" onclick="showView('dashboard')">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </button>
+    <button class="nav-btn" id="btn-nav-calendario" onclick="showView('calendario')">
+      <i class="fa-solid fa-calendar-days"></i> Calendário
+    </button>
+    <button class="nav-btn" id="btn-nav-reservas" onclick="showView('reservas')">
+      <i class="fa-solid fa-calendar-check"></i> Reservas
+    </button>
+    <div style="position:relative">
+      <div class="user-btn" id="user-btn" onclick="toggleDropdown()">
+        <i class="fa-solid fa-user fa-sm"></i>
+      </div>
+      <div class="user-dropdown" id="user-dropdown">
+        <div class="dropdown-item" style="color:var(--muted);pointer-events:none;font-size:12px;padding-bottom:5px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+          <i class="fa-solid fa-circle-user"></i> Pesquisador
+        </div>
+        <div class="dropdown-item" onclick="doLogoff()">
+          <i class="fa-solid fa-right-from-bracket"></i> Logoff
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-body">
+  <!-- ═══ SIDEBAR ════════════════════════════════ -->
+  <div id="sidebar-container"></div>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- ═══ DASHBOARD VIEW ════════════════════════════ -->
+  <div class="view dashboard-view" id="view-dashboard">
+    <div class="dashboard-container" id="dashboard-container"></div>
+  </div>
+
+  <!-- ═══ CALENDARIO VIEW ════════════════════════════ -->
+  <div class="view calendario-view" id="view-calendario">
+    <div style="display: flex; height: 100%; gap: 16px; padding: 24px; background: var(--bg);">
+      <div style="flex: 1; background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border); padding: 16px; box-shadow: var(--sh);">
+        <div id="calendar-container"></div>
+      </div>
+      <div style="width: 300px; background: var(--surface); border-radius: var(--r); border: 1.5px solid var(--border); padding: 16px; box-shadow: var(--sh); overflow-y: auto;">
+        <h3 style="font-family: var(--fh); font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-list-check" style="color: var(--accent);"></i>
+          Eventos do Dia
+        </h3>
+        <div id="calendar-events" style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="text-align: center; color: var(--muted); font-size: 12px; padding: 20px 0;">
+            Selecione uma data para ver os eventos
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ═══ MAPA VIEW ════════════════════════════════════ -->
+  <div class="view map-view active" id="view-mapa">
+    <div class="map-header">
+      <div class="map-title">
+        <i class="fa-solid fa-map" style="color:var(--accent);font-size:13px"></i>
+        Mapa do Cenargen
+      </div>
+      <div class="map-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Livre</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--warn)"></div>Ocupada</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--info)"></div>Reservada</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div>Manutenção</div>
+      </div>
+    </div>
+
+    <div class="map-container" id="map-container">
+      <!-- SVG do mapa Embrapa Cenargen estilo urbano -->
+      <svg id="map-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="mapgrid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M30 0L0 0 0 30" fill="none" stroke="#d4e8da" stroke-width=".5"/>
+          </pattern>
+          <filter id="shadow-soft">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,.12)"/>
+          </filter>
+        </defs>
+
+        <!-- Fundo -->
+        <rect width="900" height="520" fill="#edf6f1"/>
+        <rect width="900" height="520" fill="url(#mapgrid)"/>
+
+        <!-- ── ESTRADAS / RUA PRINCIPAL ── -->
+        <!-- Avenida horizontal principal -->
+        <rect x="0" y="230" width="900" height="22" fill="#c5dfc9" rx="0"/>
+        <rect x="0" y="238" width="900" height="6" fill="#b0cfb8" rx="0" opacity=".5"/>
+        <!-- Avenida vertical principal -->
+        <rect x="400" y="0" width="22" height="520" fill="#c5dfc9"/>
+        <rect x="408" y="0" width="6" height="520" fill="#b0cfb8" opacity=".5"/>
+        <!-- Ruas secundárias horizontais -->
+        <rect x="0" y="110" width="900" height="10" fill="#d4e8da"/>
+        <rect x="0" y="370" width="900" height="10" fill="#d4e8da"/>
+        <rect x="0" y="460" width="900" height="10" fill="#d4e8da"/>
+        <!-- Ruas secundárias verticais -->
+        <rect x="180" y="0" width="10" height="520" fill="#d4e8da"/>
+        <rect x="600" y="0" width="10" height="520" fill="#d4e8da"/>
+        <rect x="760" y="0" width="10" height="520" fill="#d4e8da"/>
+
+        <!-- ── VEGETAÇÃO / ÁREAS VERDES ── -->
+        <ellipse cx="80" cy="60" rx="55" ry="40" fill="#c8e6d0" opacity=".7"/>
+        <ellipse cx="700" cy="60" rx="60" ry="35" fill="#c8e6d0" opacity=".6"/>
+        <ellipse cx="850" cy="400" rx="40" ry="55" fill="#c8e6d0" opacity=".5"/>
+        <ellipse cx="50" cy="430" rx="45" ry="40" fill="#c8e6d0" opacity=".6"/>
+        <rect x="430" y="248" width="155" height="112" rx="6" fill="#d5eddb" opacity=".6"/>
+        <!-- árvores -->
+        <circle cx="80" cy="60" r="14" fill="#8ec89f" opacity=".7"/>
+        <circle cx="110" cy="50" r="10" fill="#8ec89f" opacity=".6"/>
+        <circle cx="55" cy="55" r="12" fill="#8ec89f" opacity=".65"/>
+        <circle cx="700" cy="55" r="14" fill="#8ec89f" opacity=".7"/>
+        <circle cx="728" cy="65" r="10" fill="#8ec89f" opacity=".6"/>
+        <circle cx="672" cy="60" r="11" fill="#8ec89f" opacity=".65"/>
+
+        <!-- ── BLOCOS DE EDIFÍCIOS COMUNS ── -->
+        <!-- bloco esq-cima -->
+        <rect x="200" y="20" width="80" height="55" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <rect x="290" y="30" width="55" height="40" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <!-- bloco dir-cima -->
+        <rect x="620" y="20" width="90" height="50" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <rect x="720" y="25" width="50" height="40" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <!-- bloco esq-baixo -->
+        <rect x="200" y="260" width="70" height="80" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <rect x="280" y="270" width="90" height="60" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <!-- bloco dir-baixo -->
+        <rect x="620" y="260" width="90" height="65" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <rect x="720" y="265" width="50" height="55" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <!-- blocos inferiores -->
+        <rect x="200" y="390" width="110" height="55" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+        <rect x="620" y="390" width="100" height="55" rx="5" fill="#d8eedd" stroke="#b8d4bf" stroke-width="1"/>
+
+        <!-- ── LABEL EMBRAPA ── -->
+        <text x="445" y="494" fill="#4a7f58" font-size="9.5" font-weight="600" font-family="DM Sans,sans-serif" letter-spacing="2" text-anchor="middle">EMBRAPA CENARGEN · BRASÍLIA · DF</text>
+
+        <!-- ══ ESTUFAS (clicáveis) ══════════════════════ -->
+
+        <!-- E01 Casa de Vegetação 1 — LIVRE verde -->
+        <g class="estufa-shape" onclick="openPopup('E01',evt)" data-id="E01">
+          <rect x="30" y="130" width="130" height="82" rx="8" fill="#dcf0e3" stroke="#2a9a58" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="30" y="130" width="130" height="6" rx="4" fill="#2a9a58"/>
+          <text x="95" y="165" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Casa de Vegetação 1</text>
+          <text x="95" y="181" text-anchor="middle" fill="#2a9a58" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">LIVRE</text>
+          <circle cx="95" cy="197" r="4" fill="#2a9a58" opacity=".5"/>
+        </g>
+
+        <!-- E02 Casa de Vegetação 2 — OCUPADA laranja -->
+        <g class="estufa-shape" onclick="openPopup('E02',evt)" data-id="E02">
+          <rect x="200" y="130" width="130" height="82" rx="8" fill="#fef3e2" stroke="#c97810" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="200" y="130" width="130" height="6" rx="4" fill="#c97810"/>
+          <text x="265" y="165" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Casa de Vegetação 2</text>
+          <text x="265" y="181" text-anchor="middle" fill="#c97810" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">OCUPADA</text>
+          <circle cx="265" cy="197" r="4" fill="#c97810" opacity=".5"/>
+        </g>
+
+        <!-- E03 Campo Experimental 3 — OCUPADA laranja -->
+        <g class="estufa-shape" onclick="openPopup('E03',evt)" data-id="E03">
+          <rect x="430" y="20" width="155" height="78" rx="8" fill="#fef3e2" stroke="#c97810" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="430" y="20" width="155" height="6" rx="4" fill="#c97810"/>
+          <text x="508" y="54" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Campo Experimental 3</text>
+          <text x="508" y="70" text-anchor="middle" fill="#c97810" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">OCUPADA</text>
+          <circle cx="508" cy="86" r="4" fill="#c97810" opacity=".5"/>
+        </g>
+
+        <!-- E04 Casa de Vegetação 4 — RESERVADA azul -->
+        <g class="estufa-shape" onclick="openPopup('E04',evt)" data-id="E04">
+          <rect x="430" y="248" width="155" height="82" rx="8" fill="#e6effe" stroke="#1a56c4" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="430" y="248" width="155" height="6" rx="4" fill="#1a56c4"/>
+          <text x="508" y="282" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Casa de Vegetação 4</text>
+          <text x="508" y="298" text-anchor="middle" fill="#1a56c4" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">RESERVADA</text>
+          <circle cx="508" cy="314" r="4" fill="#1a56c4" opacity=".5"/>
+        </g>
+
+        <!-- E05 Câmara de Crescimento 5 — LIVRE verde -->
+        <g class="estufa-shape" onclick="openPopup('E05',evt)" data-id="E05">
+          <rect x="620" y="130" width="130" height="82" rx="8" fill="#dcf0e3" stroke="#2a9a58" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="620" y="130" width="130" height="6" rx="4" fill="#2a9a58"/>
+          <text x="685" y="163" text-anchor="middle" fill="#17301e" font-size="10.5" font-weight="600" font-family="DM Sans,sans-serif">Câmara Crescimento 5</text>
+          <text x="685" y="179" text-anchor="middle" fill="#2a9a58" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">LIVRE</text>
+          <circle cx="685" cy="195" r="4" fill="#2a9a58" opacity=".5"/>
+        </g>
+
+        <!-- E06 Campo Experimental 6 — LIVRE verde -->
+        <g class="estufa-shape" onclick="openPopup('E06',evt)" data-id="E06">
+          <rect x="30" y="390" width="130" height="72" rx="8" fill="#dcf0e3" stroke="#2a9a58" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="30" y="390" width="130" height="6" rx="4" fill="#2a9a58"/>
+          <text x="95" y="422" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Campo Experimental 6</text>
+          <text x="95" y="438" text-anchor="middle" fill="#2a9a58" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">LIVRE</text>
+          <circle cx="95" cy="452" r="4" fill="#2a9a58" opacity=".5"/>
+        </g>
+
+        <!-- E07 Casa de Vegetação 7 — MANUTENÇÃO vermelho -->
+        <g class="estufa-shape" onclick="openPopup('E07',evt)" data-id="E07">
+          <rect x="430" y="390" width="155" height="72" rx="8" fill="#fdeaea" stroke="#c42828" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="430" y="390" width="155" height="6" rx="4" fill="#c42828"/>
+          <text x="508" y="422" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Casa de Vegetação 7</text>
+          <text x="508" y="438" text-anchor="middle" fill="#c42828" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">MANUTENÇÃO</text>
+          <circle cx="508" cy="452" r="4" fill="#c42828" opacity=".5"/>
+        </g>
+
+        <!-- E08 Campo Experimental 8 — LIVRE verde -->
+        <g class="estufa-shape" onclick="openPopup('E08',evt)" data-id="E08">
+          <rect x="620" y="390" width="130" height="72" rx="8" fill="#dcf0e3" stroke="#2a9a58" stroke-width="2" filter="url(#shadow-soft)"/>
+          <rect x="620" y="390" width="130" height="6" rx="4" fill="#2a9a58"/>
+          <text x="685" y="422" text-anchor="middle" fill="#17301e" font-size="11" font-weight="600" font-family="DM Sans,sans-serif">Campo Experimental 8</text>
+          <text x="685" y="438" text-anchor="middle" fill="#2a9a58" font-size="9" font-weight="700" font-family="DM Sans,sans-serif" letter-spacing=".5">LIVRE</text>
+          <circle cx="685" cy="452" r="4" fill="#2a9a58" opacity=".5"/>
+        </g>
+
+        <!-- Compass rose -->
+        <g transform="translate(860,30)">
+          <circle cx="0" cy="0" r="18" fill="white" stroke="#cde5d5" stroke-width="1.5"/>
+          <text x="0" y="-5" text-anchor="middle" fill="#2a9a58" font-size="9" font-weight="700" font-family="DM Sans,sans-serif">N</text>
+          <path d="M0,-13 L3,-5 L0,-8 L-3,-5 Z" fill="#2a9a58"/>
+          <path d="M0,13 L3,5 L0,8 L-3,5 Z" fill="#ccc"/>
+        </g>
+
+        <!-- Scale bar -->
+        <g transform="translate(30,500)">
+          <rect x="0" y="-8" width="60" height="4" fill="#4a7f58" rx="2"/>
+          <text x="0" y="-12" fill="#4a7f58" font-size="8" font-family="DM Sans,sans-serif">0</text>
+          <text x="55" y="-12" fill="#4a7f58" font-size="8" font-family="DM Sans,sans-serif">200m</text>
+        </g>
+      </svg>
+
+      <!-- POPUP do mapa -->
+      <div class="map-popup" id="map-popup">
+        <button class="popup-close" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="popup-status" id="popup-status"></div>
+        <div class="popup-name" id="popup-name">—</div>
+        <div class="popup-desc" id="popup-desc">—</div>
+        <div class="popup-meta">
+          <div><div class="popup-meta-label">Área</div><div class="popup-meta-value" id="popup-area">—</div></div>
+          <div><div class="popup-meta-label">Bancadas</div><div class="popup-meta-value" id="popup-cap">—</div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" id="popup-action-btn" onclick="openReservarModal()">
+          <i class="fa-solid fa-calendar-plus"></i> Reservar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RESERVAS VIEW ════════════════════════════════ -->
+  <div class="view reservas-view" id="view-reservas">
+    <div class="reservas-header">
+      <div class="reservas-title"><i class="fa-solid fa-calendar-check" style="color:var(--accent);margin-right:7px;font-size:13px"></i>Minhas Reservas</div>
+      <button class="btn btn-primary btn-sm" onclick="showView('mapa')"><i class="fa-solid fa-plus"></i> Nova Reserva</button>
+    </div>
+    <div class="reservas-list" id="reservas-list"></div>
+  </div>
+
+</div><!-- /app-body -->
+
+<!-- ═══ MODAL: RESERVAR ═══ -->
+<div class="overlay" id="overlay-reservar">
+  <div class="modal">
+    <div class="modal-img">
+      <div class="modal-img-inner" id="reservar-img-icon" style="font-size:52px">🌱</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-badge"><span class="pill" id="reservar-badge">Livre</span></div>
+      <div class="modal-title" id="reservar-title">Casa de Vegetação 1</div>
+      <div class="modal-desc" id="reservar-desc">Espaço climatizado com sistema de irrigação automatizado, ideal para experimentos em condições controladas.</div>
+      <div class="modal-meta-grid">
+        <div><div class="meta-label"><i class="fa-solid fa-ruler-combined" style="margin-right:3px"></i>Área</div><div class="meta-value" id="reservar-area">200 m²</div></div>
+        <div><div class="meta-label"><i class="fa-solid fa-table-cells" style="margin-right:3px"></i>Bancadas</div><div class="meta-value" id="reservar-cap">12</div></div>
+      </div>
+      <div class="form-row" style="margin-bottom:14px">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Data de Reserva</label>
+          <input type="date" class="form-control" id="reservar-data"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Qtd. de Vasos/Estantes</label>
+          <input type="number" class="form-control" id="reservar-qtd" placeholder="Ex: 5" min="1"/>
+          <div class="form-hint" id="reservar-limite">Limite: —</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Projeto vinculado</label>
+        <select class="form-control" id="reservar-proj">
+          <option value="">Selecionar projeto…</option>
+          <option>CRISPR-Soja: Resistência a Nematódeos</option>
+          <option>Biofortificação em Feijão</option>
+          <option>Resistência Fúngica em Arroz</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmarReserva()"><i class="fa-solid fa-floppy-disk"></i> Confirmar Reserva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: VER RESERVA ═══ -->
+<div class="overlay" id="overlay-ver-reserva">
+  <div class="modal">
+    <div class="modal-img">
+      <div class="modal-img-inner" id="ver-img-icon" style="font-size:52px">🌱</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-badge"><span class="pill" id="ver-badge">Ativa</span></div>
+      <div class="modal-title" id="ver-title">—</div>
+      <div class="modal-desc" id="ver-desc">—</div>
+      <div class="modal-meta-grid">
+        <div>
+          <div class="meta-label">Data de Reserva</div>
+          <div class="meta-value" id="ver-data">—</div>
+        </div>
+        <div>
+          <div class="meta-label">Qtd. Vasos/Estantes</div>
+          <div class="meta-value" id="ver-qtd">—</div>
+        </div>
+        <div>
+          <div class="meta-label">Projeto</div>
+          <div class="meta-value" id="ver-proj" style="font-size:11.5px">—</div>
+        </div>
+        <div>
+          <div class="meta-label">Pesquisador</div>
+          <div class="meta-value" style="font-size:11.5px">Dr. Rafael Lima</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Fechar</button>
+      <button class="btn btn-danger" onclick="cancelarReservaModal()"><i class="fa-solid fa-calendar-xmark"></i> Cancelar Reserva</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- Componentes JavaScript -->
+<script src="js/utils/helpers.js"></script>
+<script src="components/calendar.js"></script>
+<script src="components/dashboard.js"></script>
+<script src="components/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script src="js/mapa.js"></script>
+</body>
+</html>
