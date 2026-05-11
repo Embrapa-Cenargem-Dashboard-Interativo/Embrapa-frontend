@@ -1,0 +1,89 @@
++==================
+// MySQL          +
++==================
+//===============================================================================//
+// Tabelas CVG
+//==============================================================================//
+
+
+//-----------------------------------------------------------------------------------
+drop table CVGD000aChaveUnica;
+create table CVGD000aChaveUnica (
+     D_ENTIDADE     varchar(25),
+     D_ULTIMOID     int,
+
+     primary key   (D_ENTIDADE)
+
+);
+insert into CVGD000aChaveUnica (D_ENTIDADE,D_ULTIMOID) values ('FUNCIONARIO',0);
+insert into CVGD000aChaveUnica (D_ENTIDADE,D_ULTIMOID) values ('CASAVEG',0);
+
+//-----------------------------------------------------------------------------------
+drop table CVGD000bUsuarioCVG;
+create table CVGD000bUsuarioCVG (
+     D_IDFUNC       int,
+     D_TIPOUSR      varchar(2),
+     D_PERFILUSR    varchar(2000),
+     D_SENHAUSR     varchar(20),
+     D_OBSUSR       varchar(100),
+     D_IDUSRINC     int,
+     D_DATAINC      varchar(8),
+     D_IDUSRALT     int,
+     D_DATAALT      varchar(8),
+
+     primary key   (D_IDFUNC)
+
+);
+
+insert into CVGD000bUsuarioCVG (D_IDFUNC,  D_TIPOUSR, D_PERFILUSR, D_SENHAUSR, D_OBSUSR, D_IDUSRINC,  D_DATAINC)
+             values            (-111, 'SU', '/TOTAL/', '777', 'Administrador-Geral do módulo CVG', -111, '20260101');
+
+//-----------------------------------------------------------------------------------
+drop table CVGD001Funcionario;
+create table CVGD001Funcionario (
+     D_IDFUNC        int,
+     D_MATRFUNC      int,
+     D_NOMEFUNC      varchar(60),
+     D_EMAILFUNC     varchar(90),
+     D_IDCARGO       int,
+     D_IDUSRINC      int,
+     D_DATAINC       varchar(8),
+     D_IDUSRALT      int,
+     D_DATAALT       varchar(8),
+
+     primary key (D_IDFUNC)
+
+);
+
+insert into CVGD001Funcionario (D_IDFUNC,  D_MATRFUNC, D_NOMEFUNC, D_EMAILFUNC, D_IDCARGO, D_IDUSRINC,  D_DATAINC)
+             values            (-111, '000000', 'Super usuário', '???', -1, -111, '20260101');
+
+
+alter table CVGD001Funcionario drop index CVGD001_I01;
+create unique index CVGD001_I01
+   on CVGD001Funcionario(D_MATRFUNC);
+
+alter table CVGD001Funcionario drop index CVGD001_I02;
+create  index CVGD001_I02
+   on CVGD001Funcionario(D_NOMEFUNC);
+
+
+
+//-----------------------------------------------------------------------------------
+drop table CVGD002Cargo;
+create table CVGD002Cargo (
+     D_IDCARGO       int,
+     D_DESCCARGO     varchar(25),
+
+     primary key (D_IDCARGO)
+
+);
+
+
+insert into CVGD002Cargo (D_IDCARGO,  D_DESCCARGO) values (1, 'PESQUISADOR');
+insert into CVGD002Cargo (D_IDCARGO,  D_DESCCARGO) values (2, 'ANALISTA P&D');
+insert into CVGD002Cargo (D_IDCARGO,  D_DESCCARGO) values (3, 'ANALISTA ADM');
+insert into CVGD002Cargo (D_IDCARGO,  D_DESCCARGO) values (4, 'ASSISTENTE');
+insert into CVGD002Cargo (D_IDCARGO,  D_DESCCARGO) values (5, 'TECNICO');
+
+
