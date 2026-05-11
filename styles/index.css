@@ -7,29 +7,33 @@ nav{
     display: flex;
     justify-content: space-between;
 }
-
 .divs-feature-header{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    flex-basis: 100;
+    flex-basis: 400px;
     gap: 10px;
+    height: 400px;
     
 }
 .divs-feature-header p{
-    width: 150px;
+    width: auto;
+    max-width: 450px;
+    text-align: center;
+
 }
 
 .img-feature-header{
-    height: 150px;
+    height: 250px;
     aspect-ratio: 16 /9;
     object-fit: cover;
-    min-width: 160px;
+    min-width: 260px;
 }
 
 .feature-header {
-    display: grid;
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
 }
