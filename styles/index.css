@@ -7,3 +7,29 @@ nav{
     display: flex;
     justify-content: space-between;
 }
+
+.divs-feature-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: 100;
+    gap: 10px;
+    
+}
+.divs-feature-header p{
+    width: 150px;
+}
+
+.img-feature-header{
+    height: 150px;
+    aspect-ratio: 16 /9;
+    object-fit: cover;
+    min-width: 160px;
+}
+
+.feature-header {
+    display: grid;
+    flex-wrap: wrap;
+}
