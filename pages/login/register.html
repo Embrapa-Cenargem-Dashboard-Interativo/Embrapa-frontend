@@ -6,14 +6,22 @@
     <title>Cadastro</title>
 </head>
 <body>
-    <form action="" id="login-form">
-        <label>Email</label>
-        <input type="text">
-
-        <label>Senha</label>
-        <input type="password">
-
+    <form class="login-form">
+        <div class="label-form">
+            <label for="nome">Nome: </label>
+            <input type="text" id="nome">
+        </div>
+        <div class="label-form">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+        </div>
+        <div class="label-form">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha">
+        </div>
+        <a href="/pages/login/signin.html">Já têm uma conta?</a>
         <button type="submit">Entrar</button>
+        
     </form>
 </body>
 </html>
