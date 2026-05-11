@@ -1,11 +1,23 @@
 header {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     background-color: rgb(124, 210, 181);
+    height: 200px;
 }
 nav{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+#btn-nav{
+    height: 40px;
+    width: 90px;
+}
+.feature-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .divs-feature-header{
     display: flex;
@@ -32,8 +44,3 @@ nav{
     min-width: 260px;
 }
 
-.feature-header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
