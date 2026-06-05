@@ -114,7 +114,7 @@
 }
 
 .admin-table tbody tr:hover td {
-  background: #f8faff;
+  background: var(--surface2);
 }
 
 .admin-table .td-id {

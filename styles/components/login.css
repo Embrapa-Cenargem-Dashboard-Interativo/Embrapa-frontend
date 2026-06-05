@@ -193,11 +193,4 @@
   letter-spacing: -.1px;
 }
 
-/* ─── App wrapper ────────────────────────────────────────── */
-
-.app-wrap {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-}
+/* ─── App wrapper: layout (sidebar) definido em navbar.css ─ */

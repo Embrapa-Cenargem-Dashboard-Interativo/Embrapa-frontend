@@ -80,14 +80,19 @@
 <!-- ═══ APP (oculto até login) ═══════════════════════════════ -->
 <div id="app-wrap" class="app-wrap" style="display:none">
 
-  <!-- ─── NAVBAR ───────────────────────────────────────────── -->
-  <nav class="navbar">
-    <div class="nav-logo">
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <div class="sidebar-brand">
       <div class="nav-logo-icon"><i class="fa-solid fa-seedling"></i></div>
-      Cenargen
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">Cenargen</div>
+        <div class="sidebar-brand-sub">Embrapa · Brasília, DF</div>
+      </div>
     </div>
 
-    <div class="nav-right">
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Navegação</div>
       <button class="nav-btn active" id="btn-nav-mapa"       onclick="showView('mapa')">
         <i class="fa-solid fa-map-location-dot"></i> <span>Mapa</span>
       </button>
@@ -101,107 +106,195 @@
         <i class="fa-solid fa-calendar-check"></i> <span>Reservas</span>
       </button>
       <button class="nav-btn"        id="btn-nav-admin"      onclick="showView('admin')"
-              style="display:none;color:var(--info)">
+              style="display:none">
         <i class="fa-solid fa-shield-halved"></i> <span>Admin</span>
       </button>
+    </nav>
 
-      <div style="position:relative">
-        <div class="user-btn" id="user-btn" onclick="toggleDropdown()">
-          <i class="fa-solid fa-user fa-sm"></i>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="user-btn" onclick="toggleDropdown()">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user fa-sm"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="user-name-display">—</div>
+          <div class="sidebar-user-role" id="user-role-display">—</div>
         </div>
-        <div class="user-dropdown" id="user-dropdown">
-          <div style="padding:10px 12px 8px;border-bottom:1px solid var(--border);margin-bottom:4px">
-            <div style="font-size:12.5px;font-weight:700;color:var(--text)" id="user-name-display">—</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px"   id="user-role-display">—</div>
-          </div>
-          <div class="dropdown-item" onclick="doLogoff()">
-            <i class="fa-solid fa-right-from-bracket"></i> Sair
-          </div>
+        <i class="fa-solid fa-ellipsis-vertical sidebar-user-caret"></i>
+      </div>
+      <div class="user-dropdown" id="user-dropdown">
+        <div class="dropdown-item" onclick="doLogoff()">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
         </div>
       </div>
     </div>
-  </nav>
 
-  <!-- ─── CONTEÚDO ─────────────────────────────────────────── -->
+  </aside>
+
+  <!-- ─── ÁREA PRINCIPAL ───────────────────────────────────── -->
+  <div class="app-main">
   <div class="app-body">
 
     <!-- ── MAPA ──────────────────────────────────────────── -->
     <div class="view map-view active" id="view-mapa">
 
-      <div class="map-header">
-        <div class="map-title">
-          <i class="fa-solid fa-satellite-dish" style="color:var(--accent)"></i>
-          PQEB · Parque de Casas de Vegetação
-        </div>
-        <div class="map-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Livre</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--warn)"></div>Ocupada</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--info)"></div>Reservada</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div>Manutenção</div>
-        </div>
-      </div>
-
       <div class="map-container" id="map-container">
 
-        <!-- Foto aérea -->
-        <img src="assets/mapa-estufas.jpg" alt="Vista aérea PQEB Cenargen" class="map-photo"
-             onerror="this.style.display='none';document.getElementById('map-photo-fallback').style.display='flex'"/>
+        <!-- Foto aérea do campus -->
+        <img id="map-photo" src="assets/MapEstufa.png" alt="Vista aérea Embrapa Cenargen" class="map-photo"
+             onload="syncHotspots()" onerror="this.style.display='none';document.getElementById('map-photo-fallback').style.display='flex'"/>
 
         <!-- Fallback -->
         <div id="map-photo-fallback" class="map-photo-fallback">
           <i class="fa-solid fa-image-slash"></i>
-          <p>Imagem aérea não encontrada.<br>Salve o arquivo como <code>assets/mapa-estufas.jpg</code></p>
+          <p>Imagem aérea não encontrada.<br>Salve o arquivo como <code>assets/MapEstufa.png</code></p>
         </div>
 
-        <!-- ══ HOTSPOTS ══ -->
+        <!-- ══ HOTSPOTS — layer redimensionada via JS ══ -->
+        <div id="map-hotspots">
 
+        <!-- Linha superior · Casas de Vegetação A1–A7 -->
         <div class="estufa-hotspot" data-id="E01" onclick="openPopup('E01')"
-             style="left:0.5%;top:2%;width:17%;height:50%">
-          <div class="hs-name">Casa de Vegetação 1</div>
+             style="left:25.41%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A1</div>
           <div class="hs-badge">LIVRE</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E02" onclick="openPopup('E02')"
-             style="left:18.5%;top:2%;width:17%;height:50%">
-          <div class="hs-name">Casa de Vegetação 2</div>
+             style="left:29.98%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A2</div>
           <div class="hs-badge">LIVRE</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E03" onclick="openPopup('E03')"
-             style="left:37%;top:2%;width:16%;height:50%">
-          <div class="hs-name">Campo Experimental 3</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:34.55%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A3</div>
+          <div class="hs-badge">OCUPADA</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E04" onclick="openPopup('E04')"
-             style="left:54.5%;top:2%;width:13%;height:45%">
-          <div class="hs-name">Casa de Vegetação 4</div>
+             style="left:39.13%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A4</div>
           <div class="hs-badge">LIVRE</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E05" onclick="openPopup('E05')"
-             style="left:69%;top:2%;width:14%;height:45%">
-          <div class="hs-name">Câmara de Crescimento 5</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:43.7%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A5</div>
+          <div class="hs-badge">RESERVADA</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E06" onclick="openPopup('E06')"
-             style="left:0.5%;top:56%;width:17%;height:42%">
-          <div class="hs-name">Campo Experimental 6</div>
+             style="left:48.27%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A6</div>
           <div class="hs-badge">LIVRE</div>
         </div>
-
         <div class="estufa-hotspot" data-id="E07" onclick="openPopup('E07')"
-             style="left:31%;top:63%;width:16%;height:35%">
-          <div class="hs-name">Casa de Vegetação 7</div>
+             style="left:52.84%;top:16.0%;width:3.75%;height:7.5%">
+          <div class="hs-name">Casa de Vegetação A7</div>
           <div class="hs-badge">LIVRE</div>
         </div>
 
+        <!-- Núcleo Leste · Estufas B1–B6 -->
         <div class="estufa-hotspot" data-id="E08" onclick="openPopup('E08')"
-             style="left:54%;top:56%;width:30%;height:42%">
-          <div class="hs-name">Campo Experimental 8</div>
+             style="left:72.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B1</div>
+          <div class="hs-badge">MANUTENÇÃO</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E09" onclick="openPopup('E09')"
+             style="left:75.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B2</div>
           <div class="hs-badge">LIVRE</div>
         </div>
+        <div class="estufa-hotspot" data-id="E10" onclick="openPopup('E10')"
+             style="left:78.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B3</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E11" onclick="openPopup('E11')"
+             style="left:81.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B4</div>
+          <div class="hs-badge">OCUPADA</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E12" onclick="openPopup('E12')"
+             style="left:84.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B5</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E13" onclick="openPopup('E13')"
+             style="left:87.27%;top:25.5%;width:2.46%;height:6.0%">
+          <div class="hs-name">Estufa Leste B6</div>
+          <div class="hs-badge">RESERVADA</div>
+        </div>
+
+        <!-- Fileira inferior 1 · Casas C1–C6 -->
+        <div class="estufa-hotspot" data-id="E14" onclick="openPopup('E14')"
+             style="left:24.38%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C1</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E15" onclick="openPopup('E15')"
+             style="left:28.54%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C2</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E16" onclick="openPopup('E16')"
+             style="left:32.71%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C3</div>
+          <div class="hs-badge">MANUTENÇÃO</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E17" onclick="openPopup('E17')"
+             style="left:36.88%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C4</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E18" onclick="openPopup('E18')"
+             style="left:41.04%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C5</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E19" onclick="openPopup('E19')"
+             style="left:45.21%;top:69.5%;width:3.42%;height:7.0%">
+          <div class="hs-name">Casa de Vegetação C6</div>
+          <div class="hs-badge">OCUPADA</div>
+        </div>
+
+        <!-- Fileira inferior 2 · Casas D1–D8 -->
+        <div class="estufa-hotspot" data-id="E20" onclick="openPopup('E20')"
+             style="left:23.42%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D1</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E21" onclick="openPopup('E21')"
+             style="left:28.04%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D2</div>
+          <div class="hs-badge">RESERVADA</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E22" onclick="openPopup('E22')"
+             style="left:32.67%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D3</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E23" onclick="openPopup('E23')"
+             style="left:37.29%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D4</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E24" onclick="openPopup('E24')"
+             style="left:41.92%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D5</div>
+          <div class="hs-badge">MANUTENÇÃO</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E25" onclick="openPopup('E25')"
+             style="left:46.54%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D6</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E26" onclick="openPopup('E26')"
+             style="left:51.17%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D7</div>
+          <div class="hs-badge">LIVRE</div>
+        </div>
+        <div class="estufa-hotspot" data-id="E27" onclick="openPopup('E27')"
+             style="left:55.79%;top:80.0%;width:3.79%;height:8.0%">
+          <div class="hs-name">Casa de Vegetação D8</div>
+          <div class="hs-badge">OCUPADA</div>
+        </div>
+
+        </div><!-- /map-hotspots -->
 
         <!-- Popup -->
         <div class="map-popup" id="map-popup">
@@ -377,6 +470,7 @@
     </div><!-- /view-admin -->
 
   </div><!-- /app-body -->
+  </div><!-- /app-main -->
 
 </div><!-- /app-wrap -->
 
@@ -384,7 +478,7 @@
 <div class="overlay" id="overlay-reservar">
   <div class="modal">
     <div class="modal-img">
-      <div class="modal-img-inner" id="reservar-img-icon">🌱</div>
+      <div class="modal-img-inner" id="reservar-img-icon"><i class="fa-solid fa-seedling"></i></div>
     </div>
     <div class="modal-body">
       <div class="modal-badge"><span class="pill" id="reservar-badge">Livre</span></div>
@@ -434,7 +528,7 @@
 <div class="overlay" id="overlay-ver-reserva">
   <div class="modal">
     <div class="modal-img">
-      <div class="modal-img-inner" id="ver-img-icon">🌱</div>
+      <div class="modal-img-inner" id="ver-img-icon"><i class="fa-solid fa-seedling"></i></div>
     </div>
     <div class="modal-body">
       <div class="modal-badge"><span class="pill" id="ver-badge">Ativa</span></div>

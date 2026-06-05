@@ -118,7 +118,27 @@ function updateEstufaOnMap(id) {
   }
 }
 
+// ─── Sincroniza layer de hotspots com a imagem real ──────
+
+function syncHotspots() {
+  const img       = document.getElementById('map-photo');
+  const overlay   = document.getElementById('map-hotspots');
+  const container = document.getElementById('map-container');
+  if (!img || !overlay || !container || !img.naturalWidth) return;
+
+  // object-fit: fill → a imagem preenche todo o container.
+  // O layer de hotspots cobre exatamente o container inteiro.
+  overlay.style.left   = '0px';
+  overlay.style.top    = '0px';
+  overlay.style.width  = '100%';
+  overlay.style.height = '100%';
+}
+
+// Re-sincroniza ao redimensionar a janela
+window.addEventListener('resize', syncHotspots);
+
 // Expõe globalmente
 window.openPopup         = openPopup;
 window.closePopup        = closePopup;
 window.updateEstufaOnMap = updateEstufaOnMap;
+window.syncHotspots      = syncHotspots;

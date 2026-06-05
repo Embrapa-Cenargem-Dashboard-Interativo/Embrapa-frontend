@@ -4,20 +4,39 @@
  */
 
 const ESTUFAS = {
-  E01: { nome: 'Casa de Vegetação 1',    tipo: 'Casa de Vegetação',    status: 'livre',       area: '200 m²', cap: 12, icon: 'fa-leaf',   desc: 'Espaço climatizado com sistema de irrigação automatizado, ideal para experimentos em condições controladas de temperatura e umidade.' },
-  E02: { nome: 'Casa de Vegetação 2',    tipo: 'Casa de Vegetação',    status: 'ocupada',     area: '180 m²', cap: 10, icon: 'fa-sprout', desc: 'Casa de vegetação com estrutura de alumínio e cobertura em policarbonato. Equipada com bancadas e sistema de nebulização.' },
-  E03: { nome: 'Campo Experimental 3',   tipo: 'Campo Experimental',   status: 'ocupada',     area: '500 m²', cap: 20, icon: 'fa-wheat',  desc: 'Área a céu aberto com solo preparado para cultivos experimentais em larga escala. Possui sistema de irrigação por gotejamento.' },
-  E04: { nome: 'Casa de Vegetação 4',    tipo: 'Casa de Vegetação',    status: 'reservada',   area: '150 m²', cap: 8,  icon: 'fa-flower', desc: 'Espaço compacto para experimentos de pequeno porte, com controle preciso de iluminação e ventilação.' },
-  E05: { nome: 'Câmara de Crescimento 5',tipo: 'Câmara de Crescimento',status: 'livre',       area: '60 m²',  cap: 4,  icon: 'fa-flask',  desc: 'Câmara com controle total de temperatura, umidade e fotoperíodo. Ideal para experimentos que exigem condições muito precisas.' },
-  E06: { nome: 'Campo Experimental 6',   tipo: 'Campo Experimental',   status: 'livre',       area: '800 m²', cap: 30, icon: 'fa-tree',   desc: 'Maior área experimental do Cenargen. Subdividida em parcelas para múltiplos experimentos simultâneos com isolamento adequado.' },
-  E07: { nome: 'Casa de Vegetação 7',    tipo: 'Casa de Vegetação',    status: 'manutencao',  area: '180 m²', cap: 10, icon: 'fa-wrench', desc: 'Temporariamente indisponível. Sistema de irrigação em manutenção corretiva. Previsão de retorno: 15/05/2026.' },
-  E08: { nome: 'Campo Experimental 8',   tipo: 'Campo Experimental',   status: 'livre',       area: '400 m²', cap: 16, icon: 'fa-clover', desc: 'Campo com solo de cerrado nativo. Especialmente indicado para estudos de adaptação e melhoramento genético.' },
+  E01: { nome: 'Casa de Vegetação A1', tipo: 'Casa de Vegetação', status: 'livre', area: '150 m²', cap: 10, icon: 'fa-leaf', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
+  E02: { nome: 'Casa de Vegetação A2', tipo: 'Casa de Vegetação', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-leaf', desc: 'Espaço compacto para experimentos de pequeno porte com controle de luz e ventilação.' },
+  E03: { nome: 'Casa de Vegetação A3', tipo: 'Casa de Vegetação', status: 'ocupada', area: '180 m²', cap: 12, icon: 'fa-leaf', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
+  E04: { nome: 'Casa de Vegetação A4', tipo: 'Casa de Vegetação', status: 'livre', area: '60 m²', cap: 4, icon: 'fa-leaf', desc: 'Casa de vegetação para multiplicação e aclimatação de mudas e plântulas.' },
+  E05: { nome: 'Casa de Vegetação A5', tipo: 'Casa de Vegetação', status: 'reservada', area: '200 m²', cap: 14, icon: 'fa-leaf', desc: 'Ambiente protegido para estudos de melhoramento e fitossanidade vegetal.' },
+  E06: { nome: 'Casa de Vegetação A6', tipo: 'Casa de Vegetação', status: 'livre', area: '120 m²', cap: 8, icon: 'fa-leaf', desc: 'Casa de vegetação climatizada com irrigação automatizada para experimentos em condições controladas.' },
+  E07: { nome: 'Casa de Vegetação A7', tipo: 'Casa de Vegetação', status: 'livre', area: '150 m²', cap: 10, icon: 'fa-leaf', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
+  E08: { nome: 'Estufa Leste B1', tipo: 'Estufa Leste', status: 'manutencao', area: '90 m²', cap: 6, icon: 'fa-seedling', desc: 'Espaço compacto para experimentos de pequeno porte com controle de luz e ventilação.' },
+  E09: { nome: 'Estufa Leste B2', tipo: 'Estufa Leste', status: 'livre', area: '180 m²', cap: 12, icon: 'fa-seedling', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
+  E10: { nome: 'Estufa Leste B3', tipo: 'Estufa Leste', status: 'livre', area: '60 m²', cap: 4, icon: 'fa-seedling', desc: 'Casa de vegetação para multiplicação e aclimatação de mudas e plântulas.' },
+  E11: { nome: 'Estufa Leste B4', tipo: 'Estufa Leste', status: 'ocupada', area: '200 m²', cap: 14, icon: 'fa-seedling', desc: 'Ambiente protegido para estudos de melhoramento e fitossanidade vegetal.' },
+  E12: { nome: 'Estufa Leste B5', tipo: 'Estufa Leste', status: 'livre', area: '120 m²', cap: 8, icon: 'fa-seedling', desc: 'Casa de vegetação climatizada com irrigação automatizada para experimentos em condições controladas.' },
+  E13: { nome: 'Estufa Leste B6', tipo: 'Estufa Leste', status: 'reservada', area: '150 m²', cap: 10, icon: 'fa-seedling', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
+  E14: { nome: 'Casa de Vegetação C1', tipo: 'Casa de Vegetação', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-sprout', desc: 'Espaço compacto para experimentos de pequeno porte com controle de luz e ventilação.' },
+  E15: { nome: 'Casa de Vegetação C2', tipo: 'Casa de Vegetação', status: 'livre', area: '180 m²', cap: 12, icon: 'fa-sprout', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
+  E16: { nome: 'Casa de Vegetação C3', tipo: 'Casa de Vegetação', status: 'manutencao', area: '60 m²', cap: 4, icon: 'fa-sprout', desc: 'Casa de vegetação para multiplicação e aclimatação de mudas e plântulas.' },
+  E17: { nome: 'Casa de Vegetação C4', tipo: 'Casa de Vegetação', status: 'livre', area: '200 m²', cap: 14, icon: 'fa-sprout', desc: 'Ambiente protegido para estudos de melhoramento e fitossanidade vegetal.' },
+  E18: { nome: 'Casa de Vegetação C5', tipo: 'Casa de Vegetação', status: 'livre', area: '120 m²', cap: 8, icon: 'fa-sprout', desc: 'Casa de vegetação climatizada com irrigação automatizada para experimentos em condições controladas.' },
+  E19: { nome: 'Casa de Vegetação C6', tipo: 'Casa de Vegetação', status: 'ocupada', area: '150 m²', cap: 10, icon: 'fa-sprout', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
+  E20: { nome: 'Casa de Vegetação D1', tipo: 'Casa de Vegetação', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-leaf', desc: 'Espaço compacto para experimentos de pequeno porte com controle de luz e ventilação.' },
+  E21: { nome: 'Casa de Vegetação D2', tipo: 'Casa de Vegetação', status: 'reservada', area: '180 m²', cap: 12, icon: 'fa-leaf', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
+  E22: { nome: 'Casa de Vegetação D3', tipo: 'Casa de Vegetação', status: 'livre', area: '60 m²', cap: 4, icon: 'fa-leaf', desc: 'Casa de vegetação para multiplicação e aclimatação de mudas e plântulas.' },
+  E23: { nome: 'Casa de Vegetação D4', tipo: 'Casa de Vegetação', status: 'livre', area: '200 m²', cap: 14, icon: 'fa-leaf', desc: 'Ambiente protegido para estudos de melhoramento e fitossanidade vegetal.' },
+  E24: { nome: 'Casa de Vegetação D5', tipo: 'Casa de Vegetação', status: 'manutencao', area: '120 m²', cap: 8, icon: 'fa-leaf', desc: 'Casa de vegetação climatizada com irrigação automatizada para experimentos em condições controladas.' },
+  E25: { nome: 'Casa de Vegetação D6', tipo: 'Casa de Vegetação', status: 'livre', area: '150 m²', cap: 10, icon: 'fa-leaf', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
+  E26: { nome: 'Casa de Vegetação D7', tipo: 'Casa de Vegetação', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-leaf', desc: 'Espaço compacto para experimentos de pequeno porte com controle de luz e ventilação.' },
+  E27: { nome: 'Casa de Vegetação D8', tipo: 'Casa de Vegetação', status: 'ocupada', area: '180 m²', cap: 12, icon: 'fa-leaf', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
 };
 
 let reservas = [
-  { id: 'R001', estufaId: 'E02', data: '2026-04-01', qtd: 7,  projeto: 'CRISPR-Soja: Resistência a Nematódeos', status: 'ativa'   },
-  { id: 'R002', estufaId: 'E03', data: '2026-03-15', qtd: 12, projeto: 'Biofortificação em Feijão',              status: 'ativa'   },
-  { id: 'R003', estufaId: 'E04', data: '2026-05-10', qtd: 5,  projeto: 'CRISPR-Soja: Resistência a Nematódeos', status: 'pendente'},
+  { id: 'R001', estufaId: 'E03', data: '2026-04-10', qtd: 5, projeto: 'CRISPR-Soja: Resistência a Nematódeos', status: 'ativa' },
+  { id: 'R002', estufaId: 'E05', data: '2026-05-11', qtd: 6, projeto: 'Biofortificação em Feijão', status: 'pendente' },
+  { id: 'R003', estufaId: 'E11', data: '2026-06-12', qtd: 7, projeto: 'Melhoramento de Milho Tropical', status: 'ativa' },
 ];
 
 const STATUS_MAP = {
@@ -33,8 +52,8 @@ const STATUS_MAP = {
 // ─── LocalStorage ─────────────────────────────────────────
 
 const _KEYS = {
-  reservas: 'cenargen_reservas',
-  statuses: 'cenargen_estufas_status',
+  reservas: 'cenargen_reservas_v2',
+  statuses: 'cenargen_estufas_status_v2',
 };
 
 /**

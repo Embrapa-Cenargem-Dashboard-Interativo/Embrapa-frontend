@@ -66,9 +66,9 @@ function initDashboard() {
 
 function _renderActivities() {
   const items = [
-    { title: 'Reserva confirmada',    desc: 'Casa de Vegetação 2',     icon: 'fa-calendar-check', time: '2 horas atrás' },
-    { title: 'Manutenção programada', desc: 'Campo Experimental 3',    icon: 'fa-wrench',         time: '5 horas atrás' },
-    { title: 'Reserva liberada',      desc: 'Câmara de Crescimento 5', icon: 'fa-circle-check',   time: '1 dia atrás'   },
+    { title: 'Reserva confirmada',    desc: 'Casa de Vegetação A3', icon: 'fa-calendar-check', time: '2 horas atrás' },
+    { title: 'Manutenção programada', desc: 'Estufa Leste B1',      icon: 'fa-wrench',         time: '5 horas atrás' },
+    { title: 'Reserva liberada',      desc: 'Casa de Vegetação A5', icon: 'fa-circle-check',   time: '1 dia atrás'   },
   ];
   return `<div class="activity-list">${items.map(a => `
     <div class="activity-item">
@@ -84,9 +84,9 @@ function _renderActivities() {
 
 function _renderUpcoming() {
   const items = [
-    { estufa: 'Casa de Vegetação 2',     data: '12/05/2026', projeto: 'CRISPR-Soja'        },
-    { estufa: 'Campo Experimental 3',    data: '15/05/2026', projeto: 'Biofortificação'     },
-    { estufa: 'Câmara de Crescimento 5', data: '18/05/2026', projeto: 'Resistência Fúngica' },
+    { estufa: 'Casa de Vegetação A3', data: '12/05/2026', projeto: 'CRISPR-Soja'        },
+    { estufa: 'Estufa Leste B4',      data: '15/05/2026', projeto: 'Biofortificação'     },
+    { estufa: 'Casa de Vegetação A5', data: '18/05/2026', projeto: 'Resistência Fúngica' },
   ];
   return `<div class="activity-list">${items.map(r => `
     <div class="activity-item">

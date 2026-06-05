@@ -8,49 +8,54 @@
   --embrapa-green: #007A3D;
   --embrapa-blue:  #003DA5;
 
-  /* ─── Background e superfícies ──────────────────────────── */
-  --bg:         #f0f4fb;
+  /* ─── Background e superfícies (tom verde-neutro) ───────── */
+  --bg:         #eef3ec;
   --surface:    #ffffff;
-  --border:     #c8d5ec;
-  --border2:    #93aad4;
+  --surface2:   #f5f9f3;
+  --border:     #dbe6d6;
+  --border2:    #b4ccac;
 
   /* ─── Verde (ações primárias, livre, ativo) ─────────────── */
   --accent:     #007A3D;
-  --accent2:    #005f2f;
-  --accent3:    #004322;
-  --accent-lt:  #e6f4ed;
-  --accent-md:  #7bbda0;
+  --accent2:    #00632f;
+  --accent3:    #004a23;
+  --accent-lt:  #e3f3ea;
+  --accent-md:  #7cbd9b;
+
+  /* ─── Verde escuro da sidebar ───────────────────────────── */
+  --side-1:     #0a3a21;
+  --side-2:     #062a17;
 
   /* ─── Amarelo/Âmbar (aviso, ocupada) ─────────────────────── */
   --warn:       #b86b00;
-  --warn-lt:    #fef3e2;
+  --warn-lt:    #fbf0db;
 
   /* ─── Vermelho (perigo, manutenção) ─────────────────────── */
   --danger:     #c42828;
-  --danger-lt:  #fdeaea;
+  --danger-lt:  #fae9e9;
 
-  /* ─── Azul (informação, reservada) ──────────────────────── */
+  /* ─── Azul (apenas informação / reservada / admin) ──────── */
   --info:       #003DA5;
-  --info-lt:    #e6ecf8;
+  --info-lt:    #e7edf8;
 
-  /* ─── Texto ──────────────────────────────────────────────── */
-  --text:       #0d1b2a;
-  --text2:      #1a3a5c;
-  --muted:      #4a6080;
-  --muted2:     #8098b8;
+  /* ─── Texto (neutro escuro levemente esverdeado) ────────── */
+  --text:       #14241a;
+  --text2:      #2b4a38;
+  --muted:      #5d7468;
+  --muted2:     #94a99c;
 
   /* ─── Tipografia ─────────────────────────────────────────── */
   --fh: 'Syne', sans-serif;
   --fb: 'DM Sans', sans-serif;
 
   /* ─── Geometria ──────────────────────────────────────────── */
-  --r:  12px;
-  --rs: 8px;
+  --r:  14px;
+  --rs: 9px;
 
-  /* ─── Sombras ────────────────────────────────────────────── */
-  --sh:  0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,61,165,.05);
-  --sh2: 0 4px 24px rgba(0,61,165,.10), 0 2px 8px rgba(0,0,0,.07);
-  --sh3: 0 12px 48px rgba(0,61,165,.14), 0 4px 16px rgba(0,0,0,.09);
+  /* ─── Sombras (neutras esverdeadas) ─────────────────────── */
+  --sh:  0 1px 3px rgba(18,48,30,.05), 0 4px 14px rgba(0,80,40,.05);
+  --sh2: 0 4px 22px rgba(0,80,40,.09), 0 2px 8px rgba(18,40,28,.06);
+  --sh3: 0 14px 46px rgba(0,70,35,.16), 0 4px 16px rgba(18,40,28,.10);
 
   /* ─── Transição padrão ───────────────────────────────────── */
   --tr: .18s ease;
@@ -89,3 +94,6 @@ input, select, textarea {
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { background: var(--border2); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+/* ─── Seleção de texto ───────────────────────────────────── */
+::selection { background: var(--accent-lt); color: var(--accent3); }
