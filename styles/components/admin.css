@@ -1,0 +1,228 @@
+/* ═══ ADMIN VIEW ═════════════════════════════════════════════ */
+
+.admin-view {
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.admin-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── Header da página ───────────────────────────────────── */
+
+.admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.admin-page-title {
+  font-family: var(--fh);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -.3px;
+}
+
+.admin-page-title i {
+  color: var(--info);
+  font-size: 18px;
+}
+
+.admin-page-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ─── Seções ─────────────────────────────────────────────── */
+
+.admin-section {
+  margin-bottom: 30px;
+}
+
+.admin-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.admin-section-title {
+  font-family: var(--fh);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -.15px;
+}
+
+.admin-section-title i {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+/* ─── Tabela ─────────────────────────────────────────────── */
+
+.admin-table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--sh);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 600px;
+}
+
+.admin-table th {
+  background: var(--bg);
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover td {
+  background: #f8faff;
+}
+
+.admin-table .td-id {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.admin-table .actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ─── Status select inline ───────────────────────────────── */
+
+.status-select {
+  font-size: 12px;
+  font-family: var(--fb);
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--tr);
+}
+
+.status-select:focus {
+  border-color: var(--accent);
+}
+
+/* ─── Botão extra pequeno ────────────────────────────────── */
+
+.btn-xs {
+  padding: 5px 11px !important;
+  font-size: 11.5px !important;
+  gap: 5px !important;
+}
+
+/* ─── Grid de usuários ───────────────────────────────────── */
+
+.admin-users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.admin-user-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+  box-shadow: var(--sh);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: box-shadow var(--tr), transform var(--tr);
+}
+
+.admin-user-card:hover {
+  box-shadow: var(--sh2);
+  transform: translateY(-2px);
+}
+
+.admin-user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.admin-user-info { flex: 1; min-width: 0; }
+
+.admin-user-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-user-role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.admin-user-role code {
+  font-size: 10px;
+  background: var(--bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .admin-container { padding: 16px; }
+  .admin-users-grid { grid-template-columns: 1fr; }
+}

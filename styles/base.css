@@ -1,0 +1,91 @@
+/* ═══════════════════════════════════════════════════════════
+   BASE — Variáveis, Reset e Estilos Globais
+   Embrapa Cenargen
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─── Paleta Embrapa ────────────────────────────────────── */
+  --embrapa-green: #007A3D;
+  --embrapa-blue:  #003DA5;
+
+  /* ─── Background e superfícies ──────────────────────────── */
+  --bg:         #f0f4fb;
+  --surface:    #ffffff;
+  --border:     #c8d5ec;
+  --border2:    #93aad4;
+
+  /* ─── Verde (ações primárias, livre, ativo) ─────────────── */
+  --accent:     #007A3D;
+  --accent2:    #005f2f;
+  --accent3:    #004322;
+  --accent-lt:  #e6f4ed;
+  --accent-md:  #7bbda0;
+
+  /* ─── Amarelo/Âmbar (aviso, ocupada) ─────────────────────── */
+  --warn:       #b86b00;
+  --warn-lt:    #fef3e2;
+
+  /* ─── Vermelho (perigo, manutenção) ─────────────────────── */
+  --danger:     #c42828;
+  --danger-lt:  #fdeaea;
+
+  /* ─── Azul (informação, reservada) ──────────────────────── */
+  --info:       #003DA5;
+  --info-lt:    #e6ecf8;
+
+  /* ─── Texto ──────────────────────────────────────────────── */
+  --text:       #0d1b2a;
+  --text2:      #1a3a5c;
+  --muted:      #4a6080;
+  --muted2:     #8098b8;
+
+  /* ─── Tipografia ─────────────────────────────────────────── */
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+
+  /* ─── Geometria ──────────────────────────────────────────── */
+  --r:  12px;
+  --rs: 8px;
+
+  /* ─── Sombras ────────────────────────────────────────────── */
+  --sh:  0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,61,165,.05);
+  --sh2: 0 4px 24px rgba(0,61,165,.10), 0 2px 8px rgba(0,0,0,.07);
+  --sh3: 0 12px 48px rgba(0,61,165,.14), 0 4px 16px rgba(0,0,0,.09);
+
+  /* ─── Transição padrão ───────────────────────────────────── */
+  --tr: .18s ease;
+}
+
+/* ─── Reset ─────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
