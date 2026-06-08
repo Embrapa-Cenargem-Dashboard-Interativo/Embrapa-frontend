@@ -123,51 +123,160 @@
 
 .estufa-hotspot {
   position: absolute;
-  border: 2.5px solid #007A3D;
-  border-radius: 8px;
-  background: rgba(0,122,61,.18);
+  border: 2px solid var(--hs-c, #00a651);
+  border-radius: 7px;
+  background-color: var(--hs-fill, rgba(0,166,81,.20));
   cursor: pointer;
-  transition: all .2s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 5px 4px;
-  overflow: hidden;
+  transition: filter .16s ease, box-shadow .16s ease, transform .16s ease;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.18);
 }
 
 .estufa-hotspot:hover {
-  transform: scale(1.03);
-  z-index: 10;
-  box-shadow: 0 0 0 3px rgba(255,255,255,.25), 0 6px 24px rgba(0,0,0,.35);
+  filter: brightness(1.08) saturate(1.06);
+  transform: translateY(-1px) scale(1.05);
+  z-index: 20;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--hs-c, #00a651), 0 8px 20px rgba(0,0,0,.35);
 }
 
-.estufa-hotspot:active {
-  transform: scale(.99);
+.estufa-hotspot:active { transform: scale(.99); }
+
+/* ── LIVRE: vivo, convida ao clique (leve pulso) ── */
+.estufa-hotspot.st-livre {
+  --hs-c: #00a651;
+  --hs-fill: rgba(0,166,81,.26);
+  animation: hsPulse 2.6s ease-in-out infinite;
+}
+@keyframes hsPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 0 0 0 rgba(0,166,81,.0); }
+  50%      { box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 0 0 5px rgba(0,166,81,.20); }
+}
+.estufa-hotspot.st-livre:hover { animation: none; }
+
+/* ── EM USO / INDISPONÍVEL: textura listrada + tom apagado ── */
+.estufa-hotspot.st-ocupada    { --hs-c: #b86b00; --hs-fill: rgba(184,107,0,.14); }
+.estufa-hotspot.st-reservada  { --hs-c: #003DA5; --hs-fill: rgba(0,61,165,.14); }
+.estufa-hotspot.st-manutencao { --hs-c: #c42828; --hs-fill: rgba(196,40,40,.14); }
+
+.estufa-hotspot.st-ocupada,
+.estufa-hotspot.st-reservada,
+.estufa-hotspot.st-manutencao {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0 5px,
+    rgba(255,255,255,.22) 5px 10px
+  );
 }
 
-.hs-name {
-  font-size: 9px;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 1px 5px rgba(0,0,0,.9), 0 0 12px rgba(0,0,0,.7);
-  line-height: 1.2;
-  margin-bottom: 4px;
-  padding: 0 2px;
-}
-
+/* Indicador de status — círculo com ícone no canto */
 .hs-badge {
-  font-size: 8px;
-  font-weight: 800;
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--hs-c, #00a651);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
-  background: #007A3D;
-  padding: 2px 7px;
-  border-radius: 10px;
-  letter-spacing: .4px;
-  white-space: nowrap;
-  text-shadow: none;
+  font-size: 8px;
+  line-height: 1;
 }
+
+/* Nome — etiqueta flutuante só ao passar o mouse */
+.hs-name {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(8,34,18,.94);
+  padding: 4px 10px;
+  border-radius: 7px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s ease, transform .15s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  z-index: 30;
+}
+
+.hs-name::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(8,34,18,.94);
+}
+
+.estufa-hotspot:hover .hs-name {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Legenda flutuante ──────────────────────────────────── */
+
+.map-legend-float {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 16;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.86);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.18);
+  pointer-events: none;
+}
+
+.legend-float-title {
+  font-family: var(--fh);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+}
+
+.legend-ic {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 8px;
+  flex-shrink: 0;
+}
+
+.legend-ic.st-livre      { background: #00a651; }
+.legend-ic.st-ocupada    { background: #b86b00; }
+.legend-ic.st-reservada  { background: #003DA5; }
+.legend-ic.st-manutencao { background: #c42828; }
 
 /* ─── Popup ──────────────────────────────────────────────── */
 
@@ -330,8 +439,7 @@
 /* ─── Responsivo ─────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  .map-header    { padding: 10px 14px 8px; }
-  .map-container { margin: 10px 12px 14px; }
-  .map-legend    { display: none; }
-  .hs-name       { display: none; }
+  .map-legend-float { left: 10px; bottom: 10px; padding: 9px 11px; gap: 5px; }
+  .legend-row       { font-size: 11px; }
+  .hs-name          { display: none; }
 }

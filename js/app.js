@@ -14,8 +14,8 @@ function showView(viewId) {
   const navBtn = document.getElementById('btn-nav-' + viewId);
   if (navBtn) navBtn.classList.add('active');
 
-  if (viewId === 'reservas') renderReservasList();
-  if (viewId === 'admin')    renderAdmin();
+  if (viewId === 'dashboard') refreshDashboard();
+  if (viewId === 'admin')     renderAdmin();
   closePopup();
 }
 
@@ -52,73 +52,84 @@ function showToast(msg, type = 'info') {
 // ─── Init: Dashboard ──────────────────────────────────────
 
 function initDashboard() {
-  const dash = new Dashboard('dashboard-container');
+  renderDashboardCards();
+  renderReservasList();
+}
 
-  dash
-    .addCard({ label: 'Espaços Livres',   value: '4',   icon: 'fa-circle-check', color: '#007A3D', trend: { direction: 'up', value: '12' } })
-    .addCard({ label: 'Reservas Ativas',  value: '3',   icon: 'fa-calendar',     color: '#003DA5', trend: { direction: 'up', value: '8'  } })
-    .addCard({ label: 'Em Manutenção',    value: '1',   icon: 'fa-wrench',       color: '#c42828' })
-    .addCard({ label: 'Taxa de Ocupação', value: '55%', icon: 'fa-chart-pie',    color: '#b86b00' })
-    .addWidget({ title: 'Atividades Recentes', icon: 'fa-clock',          content: _renderActivities() })
-    .addWidget({ title: 'Próximas Reservas',   icon: 'fa-calendar-check', content: _renderUpcoming()   })
+// Recalcula os KPIs a partir dos dados reais (ESTUFAS + reservas)
+function renderDashboardCards() {
+  const ids    = Object.keys(ESTUFAS);
+  const total  = ids.length;
+  const livres = ids.filter(id => ESTUFAS[id].status === 'livre').length;
+  const manut  = ids.filter(id => ESTUFAS[id].status === 'manutencao').length;
+  const ativas = reservas.filter(r => r.status !== 'cancelada').length;
+  const taxa   = total ? Math.round((total - livres) / total * 100) : 0;
+
+  new Dashboard('dashboard-cards')
+    .addCard({ label: 'Espaços Livres',   value: String(livres), icon: 'fa-circle-check', color: '#007A3D' })
+    .addCard({ label: 'Reservas Ativas',  value: String(ativas), icon: 'fa-calendar',     color: '#003DA5' })
+    .addCard({ label: 'Em Manutenção',    value: String(manut),  icon: 'fa-wrench',       color: '#c42828' })
+    .addCard({ label: 'Taxa de Ocupação', value: taxa + '%',     icon: 'fa-chart-pie',    color: '#b86b00' })
     .render();
 }
 
-function _renderActivities() {
-  const items = [
-    { title: 'Reserva confirmada',    desc: 'Casa de Vegetação A3', icon: 'fa-calendar-check', time: '2 horas atrás' },
-    { title: 'Manutenção programada', desc: 'Estufa Leste B1',      icon: 'fa-wrench',         time: '5 horas atrás' },
-    { title: 'Reserva liberada',      desc: 'Casa de Vegetação A5', icon: 'fa-circle-check',   time: '1 dia atrás'   },
-  ];
-  return `<div class="activity-list">${items.map(a => `
-    <div class="activity-item">
-      <div class="activity-icon" style="background:var(--accent-lt);color:var(--accent)">
-        <i class="fa-solid ${a.icon}"></i>
-      </div>
-      <div class="activity-content">
-        <div class="activity-title">${a.title}</div>
-        <div class="activity-time">${a.desc} · ${a.time}</div>
-      </div>
-    </div>`).join('')}</div>`;
-}
-
-function _renderUpcoming() {
-  const items = [
-    { estufa: 'Casa de Vegetação A3', data: '12/05/2026', projeto: 'CRISPR-Soja'        },
-    { estufa: 'Estufa Leste B4',      data: '15/05/2026', projeto: 'Biofortificação'     },
-    { estufa: 'Casa de Vegetação A5', data: '18/05/2026', projeto: 'Resistência Fúngica' },
-  ];
-  return `<div class="activity-list">${items.map(r => `
-    <div class="activity-item">
-      <div class="activity-icon" style="background:var(--info-lt);color:var(--info)">
-        <i class="fa-solid fa-calendar"></i>
-      </div>
-      <div class="activity-content">
-        <div class="activity-title">${r.estufa}</div>
-        <div class="activity-time">${r.data} · ${r.projeto}</div>
-      </div>
-    </div>`).join('')}</div>`;
+// Atualiza tudo que depende de reservas/estufas (chamado após reservar/cancelar)
+function refreshDashboard() {
+  renderDashboardCards();
+  renderReservasList();
+  rebuildCalendarEvents();
 }
 
 // ─── Init: Calendário ─────────────────────────────────────
 
 function initCalendar() {
   window.calendarInstance = new Calendar('calendar-container', {
-    onDateSelect(date) {
-      document.getElementById('calendar-events').innerHTML =
-        `<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px 0">
-           <i class="fa-solid fa-calendar-day" style="color:var(--accent);margin-bottom:6px;display:block"></i>
-           ${date.toLocaleDateString('pt-BR')}
-         </div>`;
-    }
+    onDateSelect(date) { renderDayEvents(date); }
   });
+  rebuildCalendarEvents();
+}
 
-  const today    = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+// Marca no calendário as datas que possuem reservas
+function rebuildCalendarEvents() {
+  if (!window.calendarInstance) return;
+  window.calendarInstance.events = {};
+  reservas.filter(r => r.status !== 'cancelada').forEach(r => {
+    const [y, m, d] = r.data.split('-').map(Number);
+    const estufa = ESTUFAS[r.estufaId];
+    window.calendarInstance.addEvent(new Date(y, m - 1, d), {
+      title:  r.projeto,
+      estufa: estufa ? estufa.nome : r.estufaId,
+      status: r.status,
+    });
+  });
+}
 
-  window.calendarInstance.addEvent(today,    { title: 'Hoje'   });
-  window.calendarInstance.addEvent(tomorrow, { title: 'Amanhã' });
+// Lista os eventos do dia selecionado no painel lateral
+function renderDayEvents(date) {
+  const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const evs = (window.calendarInstance.events[key] || []);
+  const box = document.getElementById('calendar-events');
+  if (!box) return;
+
+  if (!evs.length) {
+    box.innerHTML =
+      `<div style="text-align:center;color:var(--muted);font-size:12px;padding:14px 0">
+         <i class="fa-solid fa-calendar-day" style="color:var(--accent-md);margin-bottom:6px;display:block;font-size:18px"></i>
+         Nenhuma reserva em ${date.toLocaleDateString('pt-BR')}
+       </div>`;
+    return;
+  }
+
+  box.innerHTML = `<div class="activity-list">${evs.map(e => `
+    <div class="activity-item">
+      <div class="activity-icon" style="background:var(--accent-lt);color:var(--accent)">
+        <i class="fa-solid fa-calendar-day"></i>
+      </div>
+      <div class="activity-content">
+        <div class="activity-title">${e.estufa}</div>
+        <div class="activity-time">${e.title}</div>
+      </div>
+    </div>`).join('')}</div>`;
 }
 
 // ─── Init: Restaurar estado visual do mapa ───────────────
@@ -147,8 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Expõe globalmente
-window.showView       = showView;
-window.toggleDropdown = toggleDropdown;
-window.closeAll       = closeAll;
-window.showToast      = showToast;
-window.initMapState   = initMapState;
+window.showView            = showView;
+window.toggleDropdown      = toggleDropdown;
+window.closeAll            = closeAll;
+window.showToast           = showToast;
+window.initMapState        = initMapState;
+window.renderDashboardCards = renderDashboardCards;
+window.refreshDashboard    = refreshDashboard;

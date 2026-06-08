@@ -5,28 +5,17 @@
 
 let activeEstufaId = null;
 
-// ─── Cores por status ─────────────────────────────────────
+// ─── Status do marcador ───────────────────────────────────
 
-const _HS_COLORS = {
-  livre:      '#007A3D',
-  ocupada:    '#b86b00',
-  reservada:  '#003DA5',
-  manutencao: '#c42828',
+// Ícone compacto exibido no marcador por status
+const _HS_ICON = {
+  livre:      'fa-check',
+  ocupada:    'fa-user',
+  reservada:  'fa-calendar-check',
+  manutencao: 'fa-wrench',
 };
 
-const _HS_BG = {
-  livre:      'rgba(0,122,61,.20)',
-  ocupada:    'rgba(184,107,0,.20)',
-  reservada:  'rgba(0,61,165,.20)',
-  manutencao: 'rgba(196,40,40,.20)',
-};
-
-const _HS_LABELS = {
-  livre:      'LIVRE',
-  ocupada:    'OCUPADA',
-  reservada:  'RESERVADA',
-  manutencao: 'MANUTENÇÃO',
-};
+const _HS_STATUSES = ['livre', 'ocupada', 'reservada', 'manutencao'];
 
 // ─── Popup ────────────────────────────────────────────────
 
@@ -104,18 +93,15 @@ function updateEstufaOnMap(id) {
   if (!hotspot) return;
 
   const estufa = ESTUFAS[id];
-  const c      = _HS_COLORS[estufa.status] || '#607080';
-  const bg     = _HS_BG[estufa.status]     || 'rgba(96,112,128,.18)';
-  const label  = _HS_LABELS[estufa.status] || estufa.status.toUpperCase();
+  const st     = estufa.status;
 
-  hotspot.style.borderColor     = c;
-  hotspot.style.backgroundColor = bg;
+  // Classe de status controla cor, textura e animação (ver map.css)
+  _HS_STATUSES.forEach(s => hotspot.classList.remove('st-' + s));
+  hotspot.classList.add('st-' + st);
 
+  // Ícone do status no marcador
   const badge = hotspot.querySelector('.hs-badge');
-  if (badge) {
-    badge.textContent        = label;
-    badge.style.background   = c;
-  }
+  if (badge) badge.innerHTML = `<i class="fa-solid ${_HS_ICON[st] || 'fa-circle'}"></i>`;
 }
 
 // ─── Sincroniza layer de hotspots com a imagem real ──────

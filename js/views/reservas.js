@@ -65,6 +65,7 @@ function confirmarReserva() {
   estufa.status = 'reservada';
   updateEstufaOnMap(activeEstufaId);
   saveState();
+  if (typeof refreshDashboard === 'function') refreshDashboard();
 
   closeAll();
   showToast('Reserva realizada com sucesso!', 'success');
@@ -103,7 +104,8 @@ function cancelarReservaModal() {
     saveState();
   }
   closeAll();
-  renderReservasList();
+  if (typeof refreshDashboard === 'function') refreshDashboard();
+  else renderReservasList();
   showToast('Reserva cancelada', 'info');
 }
 

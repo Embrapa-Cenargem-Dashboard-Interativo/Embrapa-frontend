@@ -253,8 +253,6 @@
 }
 
 .dashboard-view  { background: var(--bg); }
-.calendario-view { background: var(--bg); }
-.reservas-view   { overflow-y: auto; background: var(--bg); }
 .map-view        { position: relative; }
 
 /* ─── Responsivo (rail de ícones) ────────────────────────── */

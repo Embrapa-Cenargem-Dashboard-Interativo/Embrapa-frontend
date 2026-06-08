@@ -1,30 +1,20 @@
 /**
  * Componente Dashboard
- * Renderiza cards de métricas e widgets de conteúdo.
+ * Renderiza os cards de métricas (KPIs) do painel.
  */
 class Dashboard {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.cards   = [];
-    this.widgets = [];
+    this.cards = [];
   }
 
-  addCard(card)     { this.cards.push(card);   return this; }
-  addWidget(widget) { this.widgets.push(widget); return this; }
+  addCard(card) { this.cards.push(card); return this; }
 
   render() {
-    const cardsHtml = `
+    this.container.innerHTML = `
       <div class="dashboard-grid">
         ${this.cards.map(c => this._renderCard(c)).join('')}
       </div>`;
-
-    const widgetsHtml = this.widgets.length
-      ? `<div class="dashboard-widgets">
-           ${this.widgets.map(w => this._renderWidget(w)).join('')}
-         </div>`
-      : '';
-
-    this.container.innerHTML = cardsHtml + widgetsHtml;
   }
 
   _renderCard(card) {
@@ -47,21 +37,6 @@ class Dashboard {
           <div class="card-value">${card.value}</div>
           <div class="card-label">${card.label}</div>
         </div>
-      </div>`;
-  }
-
-  _renderWidget(widget) {
-    const actionHtml = widget.action
-      ? `<button class="widget-action">${widget.action}</button>` : '';
-    return `
-      <div class="dashboard-widget">
-        <div class="widget-header">
-          <h3 class="widget-title">
-            <i class="fa-solid ${widget.icon}"></i> ${widget.title}
-          </h3>
-          ${actionHtml}
-        </div>
-        <div class="widget-content">${widget.content}</div>
       </div>`;
   }
 }

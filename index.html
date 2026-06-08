@@ -97,13 +97,7 @@
         <i class="fa-solid fa-map-location-dot"></i> <span>Mapa</span>
       </button>
       <button class="nav-btn"        id="btn-nav-dashboard"  onclick="showView('dashboard')">
-        <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
-      </button>
-      <button class="nav-btn"        id="btn-nav-calendario" onclick="showView('calendario')">
-        <i class="fa-solid fa-calendar-days"></i> <span>Calendário</span>
-      </button>
-      <button class="nav-btn"        id="btn-nav-reservas"   onclick="showView('reservas')">
-        <i class="fa-solid fa-calendar-check"></i> <span>Reservas</span>
+        <i class="fa-solid fa-chart-line"></i> <span>Painel</span>
       </button>
       <button class="nav-btn"        id="btn-nav-admin"      onclick="showView('admin')"
               style="display:none">
@@ -296,6 +290,15 @@
 
         </div><!-- /map-hotspots -->
 
+        <!-- Legenda -->
+        <div class="map-legend-float">
+          <div class="legend-float-title">Disponibilidade</div>
+          <div class="legend-row"><span class="legend-ic st-livre"><i class="fa-solid fa-check"></i></span> Livre</div>
+          <div class="legend-row"><span class="legend-ic st-ocupada"><i class="fa-solid fa-user"></i></span> Ocupada</div>
+          <div class="legend-row"><span class="legend-ic st-reservada"><i class="fa-solid fa-calendar-check"></i></span> Reservada</div>
+          <div class="legend-row"><span class="legend-ic st-manutencao"><i class="fa-solid fa-wrench"></i></span> Manutenção</div>
+        </div>
+
         <!-- Popup -->
         <div class="map-popup" id="map-popup">
           <button class="popup-close" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
@@ -321,42 +324,51 @@
       </div>
     </div><!-- /view-mapa -->
 
-    <!-- ── DASHBOARD ──────────────────────────────────────── -->
+    <!-- ── DASHBOARD (KPIs + Calendário + Reservas) ───────── -->
     <div class="view dashboard-view" id="view-dashboard">
-      <div class="dashboard-container" id="dashboard-container"></div>
-    </div>
+      <div class="dashboard-container">
 
-    <!-- ── CALENDÁRIO ────────────────────────────────────── -->
-    <div class="view calendario-view" id="view-calendario">
-      <div style="display:flex;height:100%;gap:16px;padding:20px;background:var(--bg)">
-        <div style="flex:1;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh)">
-          <div id="calendar-container"></div>
-        </div>
-        <div style="width:280px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:16px;box-shadow:var(--sh);overflow-y:auto;flex-shrink:0">
-          <h3 style="font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px">
-            <i class="fa-solid fa-list-check" style="color:var(--accent)"></i>
-            Eventos do Dia
-          </h3>
-          <div id="calendar-events" style="font-size:12px;color:var(--muted);text-align:center;padding:20px 0">
-            Selecione uma data para ver os eventos
+        <div class="dashboard-header dash-head-row">
+          <div>
+            <div class="dashboard-title"><i class="fa-solid fa-chart-line"></i> Visão Geral</div>
+            <div class="dashboard-subtitle">Espaços, agenda e reservas do Cenargen — tudo em um só lugar</div>
           </div>
+          <button class="btn btn-primary btn-sm" onclick="showView('mapa')">
+            <i class="fa-solid fa-plus"></i> Nova Reserva
+          </button>
         </div>
-      </div>
-    </div>
 
-    <!-- ── RESERVAS ──────────────────────────────────────── -->
-    <div class="view reservas-view" id="view-reservas">
-      <div class="reservas-header">
-        <div class="reservas-title">
-          <i class="fa-solid fa-calendar-check" style="color:var(--accent);font-size:13px"></i>
-          Minhas Reservas
+        <!-- KPIs -->
+        <div id="dashboard-cards"></div>
+
+        <!-- Calendário + Reservas lado a lado (altura total) -->
+        <div class="dash-columns">
+
+          <div class="dashboard-widget dash-cal-widget">
+            <div class="widget-header">
+              <h3 class="widget-title"><i class="fa-solid fa-calendar-days"></i> Calendário</h3>
+            </div>
+            <div class="widget-content" style="padding:0">
+              <div id="calendar-container"></div>
+            </div>
+            <div class="dash-events" id="calendar-events">
+              Selecione uma data para ver os eventos
+            </div>
+          </div>
+
+          <div class="dashboard-widget dash-reservas-widget">
+            <div class="widget-header">
+              <h3 class="widget-title"><i class="fa-solid fa-calendar-check"></i> Minhas Reservas</h3>
+              <button class="widget-action" onclick="showView('mapa')"><i class="fa-solid fa-plus"></i> Nova</button>
+            </div>
+            <div class="widget-content" style="padding:0;overflow-y:auto">
+              <div class="reservas-list" id="reservas-list"></div>
+            </div>
+          </div>
+
         </div>
-        <button class="btn btn-primary btn-sm" onclick="showView('mapa')">
-          <i class="fa-solid fa-plus"></i> Nova Reserva
-        </button>
       </div>
-      <div class="reservas-list" id="reservas-list"></div>
-    </div>
+    </div><!-- /view-dashboard -->
 
     <!-- ── ADMIN ─────────────────────────────────────────── -->
     <div class="view admin-view" id="view-admin">
