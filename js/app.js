@@ -25,6 +25,11 @@ function toggleDropdown() {
   document.getElementById('user-dropdown').classList.toggle('open');
 }
 
+function openDocs() {
+  document.getElementById('user-dropdown').classList.remove('open');
+  document.getElementById('overlay-docs').classList.add('open');
+}
+
 document.addEventListener('click', e => {
   if (!e.target.closest('#user-btn') && !e.target.closest('#user-dropdown'))
     document.getElementById('user-dropdown').classList.remove('open');

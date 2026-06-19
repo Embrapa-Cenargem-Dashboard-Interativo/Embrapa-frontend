@@ -115,6 +115,9 @@
         <i class="fa-solid fa-ellipsis-vertical sidebar-user-caret"></i>
       </div>
       <div class="user-dropdown" id="user-dropdown">
+        <div class="dropdown-item" onclick="openDocs()">
+          <i class="fa-solid fa-book"></i> Documentação do projeto
+        </div>
         <div class="dropdown-item" onclick="doLogoff()">
           <i class="fa-solid fa-right-from-bracket"></i> Sair
         </div>
@@ -570,6 +573,57 @@
       <button class="btn btn-danger" onclick="cancelarReservaModal()">
         <i class="fa-solid fa-calendar-xmark"></i> Cancelar Reserva
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: DOCUMENTAÇÃO DO PROJETO ═══════════════════════ -->
+<div class="overlay" id="overlay-docs">
+  <div class="modal">
+    <div class="modal-img">
+      <div class="modal-img-inner"><i class="fa-solid fa-book"></i></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">Documentação do projeto</div>
+      <div class="modal-desc">
+        Sistema de gerenciamento de estufas e reservas da Embrapa Cenargen.
+        Aqui você encontra a equipe de desenvolvimento e o acesso aos
+        repositórios no GitHub.
+      </div>
+
+      <div class="form-group" style="margin-top:18px">
+        <label class="form-label">
+          <i class="fa-solid fa-users" style="margin-right:5px"></i>Grupo de desenvolvimento
+        </label>
+        <div class="docs-team">
+          <a class="docs-dev" href="https://github.com/lucas19fonseca" target="_blank" rel="noopener noreferrer">
+            <span><i class="fa-brands fa-github"></i> lucas19fonseca</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="docs-dev" href="https://github.com/MiguelCastro0" target="_blank" rel="noopener noreferrer">
+            <span><i class="fa-brands fa-github"></i> MiguelCastro0</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="docs-dev" href="https://github.com/lucasdpsa01" target="_blank" rel="noopener noreferrer">
+            <span><i class="fa-brands fa-github"></i> lucasdpsa01</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="docs-dev" href="https://github.com/LuisGuilherme345" target="_blank" rel="noopener noreferrer">
+            <span><i class="fa-brands fa-github"></i> LuisGuilherme345</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="docs-dev" href="https://github.com/FelipeTolentino21" target="_blank" rel="noopener noreferrer">
+            <span><i class="fa-brands fa-github"></i> FelipeTolentino21</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Fechar</button>
+      <a class="btn btn-primary" href="https://github.com/Embrapa-Cenargem-Dashboard-Interativo" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i> Ver organização no GitHub
+      </a>
     </div>
   </div>
 </div>
