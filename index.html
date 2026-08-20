@@ -10,7 +10,7 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
-  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="icon" type="image/jpeg" href="/Embrapa-frontend/assets/favicon.jpg">
   <!-- Base -->
   <link rel="stylesheet" href="styles/base.css"/>
 
@@ -137,7 +137,7 @@
 
         <!-- Foto aérea do campus -->
         <img id="map-photo" src="assets/MapEstufa.png" alt="Vista aérea Embrapa Cenargen" class="map-photo"
-             onload="syncHotspots()" onerror="this.style.display='none';document.getElementById('map-photo-fallback').style.display='flex'"/>
+             onload="window.syncHotspots && syncHotspots()" onerror="this.style.display='none';document.getElementById('map-photo-fallback').style.display='flex'"/>
 
         <!-- Fallback -->
         <div id="map-photo-fallback" class="map-photo-fallback">
@@ -148,148 +148,258 @@
         <!-- ══ HOTSPOTS — layer redimensionada via JS ══ -->
         <div id="map-hotspots">
 
-        <!-- Linha superior · Casas de Vegetação A1–A7 -->
+        <!-- 50 estufas numeradas (1 a 50) -->
         <div class="estufa-hotspot" data-id="E01" onclick="openPopup('E01')"
-             style="left:25.41%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A1</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:3.7%;top:10.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 01</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E02" onclick="openPopup('E02')"
-             style="left:29.98%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A2</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:7.8%;top:14.6%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 02</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E03" onclick="openPopup('E03')"
-             style="left:34.55%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A3</div>
-          <div class="hs-badge">OCUPADA</div>
+             style="left:11.2%;top:15.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 03</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E04" onclick="openPopup('E04')"
-             style="left:39.13%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A4</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:14.5%;top:17.0%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 04</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E05" onclick="openPopup('E05')"
-             style="left:43.7%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A5</div>
-          <div class="hs-badge">RESERVADA</div>
+             style="left:16.7%;top:17.0%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 05</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E06" onclick="openPopup('E06')"
-             style="left:48.27%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A6</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:23.5%;top:17.4%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 06</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E07" onclick="openPopup('E07')"
-             style="left:52.84%;top:16.0%;width:3.75%;height:7.5%">
-          <div class="hs-name">Casa de Vegetação A7</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:25.7%;top:17.0%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 07</div>
+          <div class="hs-dot"></div>
         </div>
-
-        <!-- Núcleo Leste · Estufas B1–B6 -->
         <div class="estufa-hotspot" data-id="E08" onclick="openPopup('E08')"
-             style="left:72.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B1</div>
-          <div class="hs-badge">MANUTENÇÃO</div>
+             style="left:29%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 08</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E09" onclick="openPopup('E09')"
-             style="left:75.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B2</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:32.5%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 09</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E10" onclick="openPopup('E10')"
-             style="left:78.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B3</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:35.8%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 10</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E11" onclick="openPopup('E11')"
-             style="left:81.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B4</div>
-          <div class="hs-badge">OCUPADA</div>
+             style="left:39.2%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 11</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E12" onclick="openPopup('E12')"
-             style="left:84.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B5</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:42.8%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 12</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E13" onclick="openPopup('E13')"
-             style="left:87.27%;top:25.5%;width:2.46%;height:6.0%">
-          <div class="hs-name">Estufa Leste B6</div>
-          <div class="hs-badge">RESERVADA</div>
+             style="left:46.5%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 13</div>
+          <div class="hs-dot"></div>
         </div>
-
-        <!-- Fileira inferior 1 · Casas C1–C6 -->
         <div class="estufa-hotspot" data-id="E14" onclick="openPopup('E14')"
-             style="left:24.38%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C1</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:48.7%;top:19.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 14</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E15" onclick="openPopup('E15')"
-             style="left:28.54%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C2</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:55.8%;top:19.0%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 15</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E16" onclick="openPopup('E16')"
-             style="left:32.71%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C3</div>
-          <div class="hs-badge">MANUTENÇÃO</div>
+             style="left:58.1%;top:18.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 16</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E17" onclick="openPopup('E17')"
-             style="left:36.88%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C4</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:78.8%;top:29.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 17</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E18" onclick="openPopup('E18')"
-             style="left:41.04%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C5</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:82%;top:29.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 18</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E19" onclick="openPopup('E19')"
-             style="left:45.21%;top:69.5%;width:3.42%;height:7.0%">
-          <div class="hs-name">Casa de Vegetação C6</div>
-          <div class="hs-badge">OCUPADA</div>
+             style="left:85.8%;top:29.8%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 19</div>
+          <div class="hs-dot"></div>
         </div>
-
-        <!-- Fileira inferior 2 · Casas D1–D8 -->
         <div class="estufa-hotspot" data-id="E20" onclick="openPopup('E20')"
-             style="left:23.42%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D1</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:89.3%;top:29.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 20</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E21" onclick="openPopup('E21')"
-             style="left:28.04%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D2</div>
-          <div class="hs-badge">RESERVADA</div>
+             style="left:92.5%;top:31.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 21</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E22" onclick="openPopup('E22')"
-             style="left:32.67%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D3</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:24.8%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 22</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E23" onclick="openPopup('E23')"
-             style="left:37.29%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D4</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:28.2%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 23</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E24" onclick="openPopup('E24')"
-             style="left:41.92%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D5</div>
-          <div class="hs-badge">MANUTENÇÃO</div>
+             style="left:31.6%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 24</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E25" onclick="openPopup('E25')"
-             style="left:46.54%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D6</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:35.0%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 25</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E26" onclick="openPopup('E26')"
-             style="left:51.17%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D7</div>
-          <div class="hs-badge">LIVRE</div>
+             style="left:38.5%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 26</div>
+          <div class="hs-dot"></div>
         </div>
         <div class="estufa-hotspot" data-id="E27" onclick="openPopup('E27')"
-             style="left:55.79%;top:80.0%;width:3.79%;height:8.0%">
-          <div class="hs-name">Casa de Vegetação D8</div>
-          <div class="hs-badge">OCUPADA</div>
+             style="left:41.9%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 27</div>
+          <div class="hs-dot"></div>
         </div>
+        <div class="estufa-hotspot" data-id="E28" onclick="openPopup('E28')"
+             style="left:45.3%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 28</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E29" onclick="openPopup('E29')"
+             style="left:48.7%;top:72.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 29</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E30" onclick="openPopup('E30')"
+             style="left:52.7%;top:74.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 30</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E31" onclick="openPopup('E31')"
+             style="left:56.3%;top:74.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 31</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E32" onclick="openPopup('E32')"
+             style="left:60.1%;top:74.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 32</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E33" onclick="openPopup('E33')"
+             style="left:64.1%;top:74.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 33</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E34" onclick="openPopup('E34')"
+             style="left:69.9%;top:73.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 34</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E35" onclick="openPopup('E35')"
+             style="left:75.5%;top:73.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 35</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E36" onclick="openPopup('E36')"
+             style="left:17.9%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 36</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E37" onclick="openPopup('E37')"
+             style="left:23.1%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 37</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E38" onclick="openPopup('E38')"
+             style="left:28.5%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 38</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E39" onclick="openPopup('E39')"
+             style="left:33.9%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 39</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E40" onclick="openPopup('E40')"
+             style="left:39.1%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 40</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E41" onclick="openPopup('E41')"
+             style="left:44.1%;top:88.7%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 41</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E42" onclick="openPopup('E42')"
+             style="left:47.6%;top:88.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 42</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E43" onclick="openPopup('E43')"
+             style="left:49.7%;top:86.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 43</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E44" onclick="openPopup('E44')"
+             style="left:53.7%;top:87.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 44</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E45" onclick="openPopup('E45')"
+             style="left:58.8%;top:87.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 45</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E46" onclick="openPopup('E46')"
+             style="left:60.9%;top:88.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 46</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E47" onclick="openPopup('E47')"
+             style="left:64.4%;top:88.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 47</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E48" onclick="openPopup('E48')"
+             style="left:68.0%;top:88.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 48</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E49" onclick="openPopup('E49')"
+             style="left:71.2%;top:89.9%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 49</div>
+          <div class="hs-dot"></div>
+        </div>
+        <div class="estufa-hotspot" data-id="E50" onclick="openPopup('E50')"
+             style="left:74.9%;top:84.5%;width:2.6%;height:3.0%">
+          <div class="hs-name">Estufa 50</div>
+          <div class="hs-dot"></div>
+        </div>
+
 
         </div><!-- /map-hotspots -->
 
@@ -302,27 +412,64 @@
           <div class="legend-row"><span class="legend-ic st-manutencao"><i class="fa-solid fa-wrench"></i></span> Manutenção</div>
         </div>
 
-        <!-- Popup -->
-        <div class="map-popup" id="map-popup">
-          <button class="popup-close" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
-          <div class="popup-status"    id="popup-status"></div>
-          <div class="popup-name"      id="popup-name">—</div>
-          <div class="popup-desc"      id="popup-desc">—</div>
-          <div class="popup-meta">
-            <div>
-              <div class="popup-meta-label">Área</div>
-              <div class="popup-meta-value" id="popup-area">—</div>
+        <!-- Painel de detalhes (desliza da direita) -->
+        <aside class="estufa-panel" id="estufa-panel" aria-hidden="true">
+          <button class="panel-close" onclick="closePanel()" aria-label="Fechar detalhes">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="panel-banner">
+            <div class="panel-banner-glow"></div>
+            <div class="panel-banner-icon"><i class="fa-solid fa-leaf" id="panel-icon"></i></div>
+            <span class="panel-code" id="panel-code">E01</span>
+            <span class="panel-status" id="panel-status"></span>
+          </div>
+
+          <div class="panel-body">
+            <h2 class="panel-name" id="panel-name">&mdash;</h2>
+            <div class="panel-type" id="panel-type">&mdash;</div>
+            <p class="panel-desc" id="panel-desc">&mdash;</p>
+
+            <div class="panel-info">
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-location-dot"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Localização</span><span class="panel-info-value" id="panel-loc">&mdash;</span></span>
+              </div>
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-ruler-combined"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Área</span><span class="panel-info-value" id="panel-area">&mdash;</span></span>
+              </div>
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-table-cells-large"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Capacidade</span><span class="panel-info-value" id="panel-cap">&mdash;</span></span>
+              </div>
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-seedling"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Tipo de cultivo</span><span class="panel-info-value" id="panel-cult">&mdash;</span></span>
+              </div>
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-temperature-half"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Condições médias</span><span class="panel-info-value" id="panel-cond">&mdash;</span></span>
+              </div>
+              <div class="panel-info-row">
+                <span class="panel-info-ic"><i class="fa-solid fa-clock"></i></span>
+                <span class="panel-info-txt"><span class="panel-info-label">Disponibilidade</span><span class="panel-info-value" id="panel-disp">&mdash;</span></span>
+              </div>
             </div>
-            <div>
-              <div class="popup-meta-label">Bancadas</div>
-              <div class="popup-meta-value" id="popup-cap">—</div>
+
+            <div class="panel-reserva" id="panel-reserva" style="display:none">
+              <div class="panel-reserva-head"><i class="fa-solid fa-calendar-check"></i> Reserva vinculada</div>
+              <div class="panel-reserva-proj" id="panel-reserva-proj">&mdash;</div>
+              <div class="panel-reserva-meta" id="panel-reserva-meta">&mdash;</div>
             </div>
           </div>
-          <button class="btn btn-primary" id="popup-action-btn"
-                  style="width:100%;justify-content:center">
-            <i class="fa-solid fa-calendar-plus"></i> Reservar
-          </button>
-        </div>
+
+          <div class="panel-footer">
+            <button class="btn btn-primary" id="panel-action-btn" style="width:100%;justify-content:center">
+              <i class="fa-solid fa-calendar-plus"></i> Reservar esta estufa
+            </button>
+          </div>
+        </aside>
 
       </div>
     </div><!-- /view-mapa -->
