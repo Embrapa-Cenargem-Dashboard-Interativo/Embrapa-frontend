@@ -1,4 +1,4 @@
-# Embrapa Cenargen — Front-end
+# Embrapa Cenargen - Front-end
 
 Repositório responsável pelo desenvolvimento da **interface web do Sistema de Gestão de Campos Experimentais da Embrapa Cenargen (CVGWeb)**.
 
@@ -27,9 +27,9 @@ O front-end será responsável por:
 
 ## Tecnologias
 
-* **HTML** — estrutura das páginas;
-* **CSS** — estilização e organização visual;
-* **TypeScript** — lógica e comportamento da aplicação.
+* **HTML** - estrutura das páginas;
+* **CSS** - estilização e organização visual;
+* **TypeScript** - lógica e comportamento da aplicação.
 
 ## Integração
 
