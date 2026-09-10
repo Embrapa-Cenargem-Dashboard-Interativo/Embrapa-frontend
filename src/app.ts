@@ -2,50 +2,62 @@
  * App — Inicialização e orquestração geral
  * Embrapa Cenargen
  */
+import { ESTUFAS, reservas } from './data/estufas';
+import { Calendar } from './components/Calendar';
+import { Dashboard } from './components/Dashboard';
+import { updateEstufaOnMap, closePopup } from './views/mapa';
+import { renderReservasList } from './views/reservas';
+import { renderAdmin } from './views/admin';
+import { initAuth } from './views/login';
+
+const $ = (id: string): HTMLElement | null => document.getElementById(id);
 
 // ─── Navegação ────────────────────────────────────────────────
 
-function showView(viewId) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const target = document.getElementById('view-' + viewId);
+function showView(viewId: string): void {
+  document.querySelectorAll('.view').forEach((v) => v.classList.remove('active'));
+  const target = $('view-' + viewId);
   if (target) target.classList.add('active');
 
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const navBtn = document.getElementById('btn-nav-' + viewId);
+  document.querySelectorAll('.nav-btn').forEach((b) => b.classList.remove('active'));
+  const navBtn = $('btn-nav-' + viewId);
   if (navBtn) navBtn.classList.add('active');
 
   if (viewId === 'dashboard') refreshDashboard();
-  if (viewId === 'admin')     renderAdmin();
+  if (viewId === 'admin') renderAdmin();
   closePopup();
 }
 
 // ─── User Dropdown ────────────────────────────────────────
 
-function toggleDropdown() {
-  document.getElementById('user-dropdown').classList.toggle('open');
+function toggleDropdown(): void {
+  $('user-dropdown')?.classList.toggle('open');
 }
 
-function openDocs() {
-  document.getElementById('user-dropdown').classList.remove('open');
-  document.getElementById('overlay-docs').classList.add('open');
+function openDocs(): void {
+  $('user-dropdown')?.classList.remove('open');
+  $('overlay-docs')?.classList.add('open');
 }
 
-document.addEventListener('click', e => {
-  if (!e.target.closest('#user-btn') && !e.target.closest('#user-dropdown'))
-    document.getElementById('user-dropdown').classList.remove('open');
+document.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (!target.closest('#user-btn') && !target.closest('#user-dropdown')) {
+    $('user-dropdown')?.classList.remove('open');
+  }
 });
 
 // ─── Modais ───────────────────────────────────────────────
 
-function closeAll() {
-  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
+function closeAll(): void {
+  document.querySelectorAll('.overlay').forEach((o) => o.classList.remove('open'));
 }
 
 // ─── Toast ────────────────────────────────────────────────
 
-function showToast(msg, type = 'info') {
-  const ICONS = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
-  const wrap  = document.getElementById('toast-wrap');
+function showToast(msg: string, type: 'success' | 'error' | 'info' = 'info'): void {
+  const ICONS: Record<string, string> = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
+  const wrap = $('toast-wrap');
+  if (!wrap) return;
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `<i class="fa-solid ${ICONS[type] || ICONS.info}"></i> ${msg}`;
@@ -56,19 +68,19 @@ function showToast(msg, type = 'info') {
 
 // ─── Init: Dashboard ──────────────────────────────────────
 
-function initDashboard() {
+function initDashboard(): void {
   renderDashboardCards();
   renderReservasList();
 }
 
 // Recalcula os KPIs a partir dos dados reais (ESTUFAS + reservas)
-function renderDashboardCards() {
-  const ids    = Object.keys(ESTUFAS);
-  const total  = ids.length;
-  const livres = ids.filter(id => ESTUFAS[id].status === 'livre').length;
-  const manut  = ids.filter(id => ESTUFAS[id].status === 'manutencao').length;
-  const ativas = reservas.filter(r => r.status !== 'cancelada').length;
-  const taxa   = total ? Math.round((total - livres) / total * 100) : 0;
+function renderDashboardCards(): void {
+  const ids = Object.keys(ESTUFAS);
+  const total = ids.length;
+  const livres = ids.filter((id) => ESTUFAS[id].status === 'livre').length;
+  const manut = ids.filter((id) => ESTUFAS[id].status === 'manutencao').length;
+  const ativas = reservas.filter((r) => r.status !== 'cancelada').length;
+  const taxa = total ? Math.round((total - livres) / total * 100) : 0;
 
   new Dashboard('dashboard-cards')
     .addCard({ label: 'Espaços Livres',   value: String(livres), icon: 'fa-circle-check', color: '#007A3D' })
@@ -79,7 +91,7 @@ function renderDashboardCards() {
 }
 
 // Atualiza tudo que depende de reservas/estufas (chamado após reservar/cancelar)
-function refreshDashboard() {
+function refreshDashboard(): void {
   renderDashboardCards();
   renderReservasList();
   rebuildCalendarEvents();
@@ -87,22 +99,22 @@ function refreshDashboard() {
 
 // ─── Init: Calendário ─────────────────────────────────────
 
-function initCalendar() {
+function initCalendar(): void {
   window.calendarInstance = new Calendar('calendar-container', {
-    onDateSelect(date) { renderDayEvents(date); }
+    onDateSelect(date: Date) { renderDayEvents(date); },
   });
   rebuildCalendarEvents();
 }
 
 // Marca no calendário as datas que possuem reservas
-function rebuildCalendarEvents() {
+function rebuildCalendarEvents(): void {
   if (!window.calendarInstance) return;
   window.calendarInstance.events = {};
-  reservas.filter(r => r.status !== 'cancelada').forEach(r => {
+  reservas.filter((r) => r.status !== 'cancelada').forEach((r) => {
     const [y, m, d] = r.data.split('-').map(Number);
     const estufa = ESTUFAS[r.estufaId];
-    window.calendarInstance.addEvent(new Date(y, m - 1, d), {
-      title:  r.projeto,
+    window.calendarInstance!.addEvent(new Date(y, m - 1, d), {
+      title: r.projeto,
       estufa: estufa ? estufa.nome : r.estufaId,
       status: r.status,
     });
@@ -110,10 +122,10 @@ function rebuildCalendarEvents() {
 }
 
 // Lista os eventos do dia selecionado no painel lateral
-function renderDayEvents(date) {
+function renderDayEvents(date: Date): void {
   const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-  const evs = (window.calendarInstance.events[key] || []);
-  const box = document.getElementById('calendar-events');
+  const evs = (window.calendarInstance?.events[key] || []);
+  const box = $('calendar-events');
   if (!box) return;
 
   if (!evs.length) {
@@ -125,7 +137,7 @@ function renderDayEvents(date) {
     return;
   }
 
-  box.innerHTML = `<div class="activity-list">${evs.map(e => `
+  box.innerHTML = `<div class="activity-list">${evs.map((e) => `
     <div class="activity-item">
       <div class="activity-icon" style="background:var(--accent-lt);color:var(--accent)">
         <i class="fa-solid fa-calendar-day"></i>
@@ -139,8 +151,8 @@ function renderDayEvents(date) {
 
 // ─── Init: Restaurar estado visual do mapa ───────────────
 
-function initMapState() {
-  Object.keys(ESTUFAS).forEach(id => updateEstufaOnMap(id));
+function initMapState(): void {
+  Object.keys(ESTUFAS).forEach((id) => updateEstufaOnMap(id));
 }
 
 // ─── Init geral ───────────────────────────────────────────
@@ -150,23 +162,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initCalendar();
 
   // Data mínima no formulário de reserva
-  const dateInput = document.getElementById('reservar-data');
+  const dateInput = $('reservar-data') as HTMLInputElement | null;
   if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
 
   // Fecha modal ao clicar fora
-  document.querySelectorAll('.overlay').forEach(o => {
-    o.addEventListener('click', e => { if (e.target === o) closeAll(); });
+  document.querySelectorAll('.overlay').forEach((o) => {
+    o.addEventListener('click', (e) => { if (e.target === o) closeAll(); });
   });
 
-  // Inicia autenticação (login.js carregado após este script)
-  if (typeof initAuth === 'function') initAuth();
+  // Inicia autenticação
+  initAuth();
 });
 
 // Expõe globalmente
-window.showView            = showView;
-window.toggleDropdown      = toggleDropdown;
-window.closeAll            = closeAll;
-window.showToast           = showToast;
-window.initMapState        = initMapState;
+window.showView = showView;
+window.toggleDropdown = toggleDropdown;
+window.openDocs = openDocs;
+window.closeAll = closeAll;
+window.showToast = showToast;
+window.initMapState = initMapState;
 window.renderDashboardCards = renderDashboardCards;
-window.refreshDashboard    = refreshDashboard;
+window.refreshDashboard = refreshDashboard;

@@ -2,12 +2,17 @@
  * View: Admin
  * Gestão completa: métricas, estufas, reservas e usuários.
  */
+import { ESTUFAS, STATUS_MAP, reservas, saveState } from '../data/estufas';
+import { updateEstufaOnMap } from './mapa';
+import type { Estufa } from '../types';
 
-function renderAdmin() {
+const $ = (id: string): HTMLElement | null => document.getElementById(id);
+
+function renderAdmin(): void {
   // Acesso restrito
   if (!window.currentUser || window.currentUser.role !== 'admin') {
-    showToast('Acesso restrito a administradores', 'error');
-    showView('mapa');
+    window.showToast('Acesso restrito a administradores', 'error');
+    window.showView('mapa');
     return;
   }
   _renderAdminMetrics();
@@ -18,31 +23,31 @@ function renderAdmin() {
 
 // ─── Métricas ──────────────────────────────────────────────
 
-function _renderAdminMetrics() {
+function _renderAdminMetrics(): void {
   const vals = Object.values(ESTUFAS);
-  const total  = vals.length;
-  const livres = vals.filter(e => e.status === 'livre').length;
-  const ocup   = vals.filter(e => e.status === 'ocupada' || e.status === 'reservada').length;
-  const manut  = vals.filter(e => e.status === 'manutencao').length;
-  const ativos = reservas.filter(r => r.status === 'ativa' || r.status === 'pendente').length;
-  const taxa   = total > 0 ? Math.round((ocup / total) * 100) : 0;
+  const total = vals.length;
+  const livres = vals.filter((e) => e.status === 'livre').length;
+  const ocup = vals.filter((e) => e.status === 'ocupada' || e.status === 'reservada').length;
+  const manut = vals.filter((e) => e.status === 'manutencao').length;
+  const ativos = reservas.filter((r) => r.status === 'ativa' || r.status === 'pendente').length;
+  const taxa = total > 0 ? Math.round((ocup / total) * 100) : 0;
 
-  _set('adm-total',    total);
-  _set('adm-livres',   livres);
+  _set('adm-total', total);
+  _set('adm-livres', livres);
   _set('adm-reservas', ativos);
-  _set('adm-taxa',     taxa + '%');
-  _set('adm-manut',    manut);
+  _set('adm-taxa', taxa + '%');
+  _set('adm-manut', manut);
 }
 
-function _set(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
+function _set(id: string, val: string | number): void {
+  const el = $(id);
+  if (el) el.textContent = String(val);
 }
 
 // ─── Estufas ───────────────────────────────────────────────
 
-function _renderAdminEstufas() {
-  const tbody = document.getElementById('adm-estufas-tbody');
+function _renderAdminEstufas(): void {
+  const tbody = $('adm-estufas-tbody');
   if (!tbody) return;
 
   tbody.innerHTML = Object.entries(ESTUFAS).map(([id, e]) => {
@@ -58,9 +63,9 @@ function _renderAdminEstufas() {
         <td>
           <div class="actions">
             <select class="status-select" onchange="adminSetStatus('${id}', this.value)">
-              <option value="livre"      ${e.status === 'livre'      ? 'selected' : ''}>Livre</option>
-              <option value="ocupada"    ${e.status === 'ocupada'    ? 'selected' : ''}>Ocupada</option>
-              <option value="reservada"  ${e.status === 'reservada'  ? 'selected' : ''}>Reservada</option>
+              <option value="livre"      ${e.status === 'livre' ? 'selected' : ''}>Livre</option>
+              <option value="ocupada"    ${e.status === 'ocupada' ? 'selected' : ''}>Ocupada</option>
+              <option value="reservada"  ${e.status === 'reservada' ? 'selected' : ''}>Reservada</option>
               <option value="manutencao" ${e.status === 'manutencao' ? 'selected' : ''}>Manutenção</option>
             </select>
           </div>
@@ -69,22 +74,22 @@ function _renderAdminEstufas() {
   }).join('');
 }
 
-function adminSetStatus(id, status) {
-  ESTUFAS[id].status = status;
+function adminSetStatus(id: string, status: string): void {
+  ESTUFAS[id].status = status as Estufa['status'];
   updateEstufaOnMap(id);
   saveState();
   _renderAdminMetrics();
   _renderAdminEstufas();
-  showToast(`${ESTUFAS[id].nome}: status atualizado para ${STATUS_MAP[status]?.label || status}`, 'success');
+  window.showToast(`${ESTUFAS[id].nome}: status atualizado para ${STATUS_MAP[status]?.label || status}`, 'success');
 }
 
 // ─── Reservas ──────────────────────────────────────────────
 
-function _renderAdminReservas() {
-  const tbody = document.getElementById('adm-reservas-tbody');
+function _renderAdminReservas(): void {
+  const tbody = $('adm-reservas-tbody');
   if (!tbody) return;
 
-  const all = reservas.filter(r => r.status !== 'cancelada');
+  const all = reservas.filter((r) => r.status !== 'cancelada');
 
   if (!all.length) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:28px">
@@ -92,11 +97,11 @@ function _renderAdminReservas() {
     return;
   }
 
-  tbody.innerHTML = all.map(r => {
+  tbody.innerHTML = all.map((r) => {
     const e = ESTUFAS[r.estufaId];
     const s = STATUS_MAP[r.status] || { label: r.status, cls: 'pill-muted', icon: 'fa-circle' };
     const canApprove = r.status === 'pendente';
-    const canCancel  = r.status !== 'cancelada';
+    const canCancel = r.status !== 'cancelada';
     return `
       <tr>
         <td class="td-id">${r.id}</td>
@@ -108,51 +113,51 @@ function _renderAdminReservas() {
         <td>
           <div class="actions">
             ${canApprove ? `<button class="btn btn-primary btn-sm btn-xs" title="Aprovar" onclick="adminAprovarReserva('${r.id}')"><i class="fa-solid fa-check"></i> Aprovar</button>` : ''}
-            ${canCancel  ? `<button class="btn btn-danger  btn-sm btn-xs" title="Cancelar" onclick="adminCancelarReserva('${r.id}')"><i class="fa-solid fa-xmark"></i></button>` : ''}
+            ${canCancel ? `<button class="btn btn-danger  btn-sm btn-xs" title="Cancelar" onclick="adminCancelarReserva('${r.id}')"><i class="fa-solid fa-xmark"></i></button>` : ''}
           </div>
         </td>
       </tr>`;
   }).join('');
 }
 
-function adminAprovarReserva(id) {
-  const r = reservas.find(r => r.id === id);
+function adminAprovarReserva(id: string): void {
+  const r = reservas.find((x) => x.id === id);
   if (!r) return;
   r.status = 'ativa';
   ESTUFAS[r.estufaId].status = 'ocupada';
   updateEstufaOnMap(r.estufaId);
   saveState();
   renderAdmin();
-  showToast('Reserva aprovada com sucesso!', 'success');
+  window.showToast('Reserva aprovada com sucesso!', 'success');
 }
 
-function adminCancelarReserva(id) {
-  const r = reservas.find(r => r.id === id);
+function adminCancelarReserva(id: string): void {
+  const r = reservas.find((x) => x.id === id);
   if (!r) return;
   r.status = 'cancelada';
   // Só libera estufa se não tiver mais reservas ativas
-  const outras = reservas.filter(x => x.estufaId === r.estufaId && (x.status === 'ativa' || x.status === 'pendente') && x.id !== id);
+  const outras = reservas.filter((x) => x.estufaId === r.estufaId && (x.status === 'ativa' || x.status === 'pendente') && x.id !== id);
   if (!outras.length) {
     ESTUFAS[r.estufaId].status = 'livre';
     updateEstufaOnMap(r.estufaId);
   }
   saveState();
   renderAdmin();
-  showToast('Reserva cancelada', 'info');
+  window.showToast('Reserva cancelada', 'info');
 }
 
 // ─── Usuários ──────────────────────────────────────────────
 
-function _renderAdminUsers() {
-  const grid = document.getElementById('adm-users-grid');
+function _renderAdminUsers(): void {
+  const grid = $('adm-users-grid');
   if (!grid) return;
 
-  grid.innerHTML = (window.USERS || []).map(u => {
+  grid.innerHTML = (window.USERS || []).map((u) => {
     const isAdmin = u.role === 'admin';
-    const bg      = isAdmin ? 'var(--info)' : 'var(--accent)';
-    const icon    = isAdmin ? 'fa-user-shield' : 'fa-user';
-    const label   = isAdmin ? 'Administrador' : 'Pesquisador';
-    const isMe    = window.currentUser && window.currentUser.id === u.id;
+    const bg = isAdmin ? 'var(--info)' : 'var(--accent)';
+    const icon = isAdmin ? 'fa-user-shield' : 'fa-user';
+    const label = isAdmin ? 'Administrador' : 'Pesquisador';
+    const isMe = window.currentUser && window.currentUser.id === u.id;
     return `
       <div class="admin-user-card">
         <div class="admin-user-avatar" style="background:${bg}">
@@ -168,14 +173,16 @@ function _renderAdminUsers() {
 
 // ─── Helper de data ────────────────────────────────────────
 
-function _fmtDateAdmin(d) {
+function _fmtDateAdmin(d: string): string {
   if (!d) return '—';
   const [y, m, day] = d.split('-');
   return `${day}/${m}/${y}`;
 }
 
 // Expõe globalmente
-window.renderAdmin          = renderAdmin;
-window.adminSetStatus       = adminSetStatus;
-window.adminAprovarReserva  = adminAprovarReserva;
+window.renderAdmin = renderAdmin;
+window.adminSetStatus = adminSetStatus;
+window.adminAprovarReserva = adminAprovarReserva;
 window.adminCancelarReserva = adminCancelarReserva;
+
+export { renderAdmin, adminSetStatus, adminAprovarReserva, adminCancelarReserva };

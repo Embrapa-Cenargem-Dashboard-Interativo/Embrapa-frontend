@@ -2,8 +2,9 @@
  * Dados das Estufas e Reservas
  * Embrapa Cenargen — 50 estufas (numeradas 1 a 50)
  */
+import type { Estufas, Reserva, StatusInfo } from '../types';
 
-const ESTUFAS = {
+export const ESTUFAS: Estufas = {
   E01: { nome: 'Estufa 01', tipo: 'Casa de vegetação', setor: 'Setor Norte', status: 'livre', area: '60 m²', cap: 4, icon: 'fa-leaf', desc: 'Estrutura em alumínio com cobertura de policarbonato, bancadas e sistema de nebulização.' },
   E02: { nome: 'Estufa 02', tipo: 'Estufa climatizada', setor: 'Setor Norte', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-seedling', desc: 'Espaço para experimentos de pequeno porte com controle de luz e ventilação.' },
   E03: { nome: 'Estufa 03', tipo: 'Telado agrícola', setor: 'Setor Norte', status: 'ocupada', area: '120 m²', cap: 8, icon: 'fa-sprout', desc: 'Câmara com controle de temperatura, umidade e fotoperíodo para ensaios de precisão.' },
@@ -56,13 +57,14 @@ const ESTUFAS = {
   E50: { nome: 'Estufa 50', tipo: 'Estufa climatizada', setor: 'Setor Sul', status: 'livre', area: '90 m²', cap: 6, icon: 'fa-seedling', desc: 'Espaço para experimentos de pequeno porte com controle de luz e ventilação.' },
 };
 
-let reservas = [
+/** Lista mutavel de reservas (mutada in-place por loadState/confirmarReserva). */
+export const reservas: Reserva[] = [
   { id: 'R001', estufaId: 'E03', data: '2026-04-10', qtd: 5, projeto: 'CRISPR-Soja: Resistência a Nematódeos', status: 'ativa' },
   { id: 'R002', estufaId: 'E05', data: '2026-05-11', qtd: 6, projeto: 'Biofortificação em Feijão', status: 'pendente' },
   { id: 'R003', estufaId: 'E11', data: '2026-06-12', qtd: 7, projeto: 'Melhoramento de Milho Tropical', status: 'ativa' },
 ];
 
-const STATUS_MAP = {
+export const STATUS_MAP: Record<string, StatusInfo> = {
   livre:      { label: 'Livre',       cls: 'pill-green',  icon: 'fa-circle-check'  },
   ocupada:    { label: 'Ocupada',     cls: 'pill-warn',   icon: 'fa-house-leaf'    },
   reservada:  { label: 'Reservada',   cls: 'pill-info',   icon: 'fa-calendar'      },
@@ -79,10 +81,10 @@ const _KEYS = {
   statuses: 'cenargen_estufas_status_v2',
 };
 
-function saveState() {
+export function saveState(): void {
   try {
-    const statuses = {};
-    Object.keys(ESTUFAS).forEach(function(id) { statuses[id] = ESTUFAS[id].status; });
+    const statuses: Record<string, string> = {};
+    Object.keys(ESTUFAS).forEach((id) => { statuses[id] = ESTUFAS[id].status; });
     localStorage.setItem(_KEYS.reservas, JSON.stringify(reservas));
     localStorage.setItem(_KEYS.statuses, JSON.stringify(statuses));
   } catch (e) {
@@ -90,20 +92,20 @@ function saveState() {
   }
 }
 
-function loadState() {
+export function loadState(): void {
   try {
-    var savedR = localStorage.getItem(_KEYS.reservas);
-    var savedS = localStorage.getItem(_KEYS.statuses);
+    const savedR = localStorage.getItem(_KEYS.reservas);
+    const savedS = localStorage.getItem(_KEYS.statuses);
 
     if (savedR) {
-      var loaded = JSON.parse(savedR);
+      const loaded = JSON.parse(savedR) as Reserva[];
       reservas.length = 0;
-      loaded.forEach(function(r) { reservas.push(r); });
+      loaded.forEach((r) => reservas.push(r));
     }
 
     if (savedS) {
-      var statuses = JSON.parse(savedS);
-      Object.keys(statuses).forEach(function(id) {
+      const statuses = JSON.parse(savedS) as Record<string, Estufas[string]['status']>;
+      Object.keys(statuses).forEach((id) => {
         if (ESTUFAS[id]) ESTUFAS[id].status = statuses[id];
       });
     }
@@ -114,7 +116,7 @@ function loadState() {
 
 loadState();
 
-window.ESTUFAS    = ESTUFAS;
-window.reservas   = reservas;
+window.ESTUFAS = ESTUFAS;
+window.reservas = reservas;
 window.STATUS_MAP = STATUS_MAP;
-window.saveState  = saveState;
+window.saveState = saveState;

@@ -2,38 +2,46 @@
  * Componente Calendar
  * Renderiza um calendário mensal interativo.
  */
-class Calendar {
-  constructor(containerId, options = {}) {
-    this.container   = document.getElementById(containerId);
+import type { CalendarEvent, CalendarOptions } from '../types';
+
+export class Calendar {
+  container: HTMLElement | null;
+  currentDate: Date;
+  selectedDate: Date | null;
+  events: Record<string, CalendarEvent[]>;
+  onDateSelect: ((date: Date) => void) | null;
+
+  constructor(containerId: string, options: CalendarOptions = {}) {
+    this.container = document.getElementById(containerId);
     this.currentDate = new Date();
     this.selectedDate = null;
-    this.events       = options.events || {};
+    this.events = options.events || {};
     this.onDateSelect = options.onDateSelect || null;
     this.render();
   }
 
   // ─── Navegação ────────────────────────────────────────────
 
-  previousMonth() {
+  previousMonth(): void {
     this.currentDate.setMonth(this.currentDate.getMonth() - 1);
     this.render();
   }
 
-  nextMonth() {
+  nextMonth(): void {
     this.currentDate.setMonth(this.currentDate.getMonth() + 1);
     this.render();
   }
 
-  goToToday() {
+  goToToday(): void {
     this.currentDate = new Date();
     this.render();
   }
 
-  selectDate(day) {
+  selectDate(day: number): void {
     this.selectedDate = new Date(
       this.currentDate.getFullYear(),
       this.currentDate.getMonth(),
-      day
+      day,
     );
     this.render();
     this.onDateSelect?.(this.selectedDate);
@@ -41,47 +49,49 @@ class Calendar {
 
   // ─── Eventos ──────────────────────────────────────────────
 
-  addEvent(date, event) {
+  addEvent(date: Date, event: CalendarEvent): void {
     const key = this._key(date);
     (this.events[key] ??= []).push(event);
     this.render();
   }
 
-  _key(date) {
+  private _key(date: Date): string {
     return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 
   // ─── Helpers ──────────────────────────────────────────────
 
-  _isToday(day) {
+  private _isToday(day: number): boolean {
     const t = new Date();
     return day === t.getDate()
       && this.currentDate.getMonth() === t.getMonth()
       && this.currentDate.getFullYear() === t.getFullYear();
   }
 
-  _isSelected(day) {
-    return this.selectedDate
+  private _isSelected(day: number): boolean {
+    return !!this.selectedDate
       && day === this.selectedDate.getDate()
       && this.currentDate.getMonth() === this.selectedDate.getMonth()
       && this.currentDate.getFullYear() === this.selectedDate.getFullYear();
   }
 
-  _hasEvents(day) {
+  private _hasEvents(day: number): boolean {
     return !!this.events[`${this.currentDate.getFullYear()}-${this.currentDate.getMonth()}-${day}`]?.length;
   }
 
   // ─── Render ───────────────────────────────────────────────
 
-  render() {
-    const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
-                    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-    const DAYS   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  render(): void {
+    if (!this.container) return;
 
-    const month      = this.currentDate.getMonth();
-    const year       = this.currentDate.getFullYear();
-    const firstDay   = new Date(year, month, 1).getDay();
-    const totalDays  = new Date(year, month + 1, 0).getDate();
+    const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const DAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+    const month = this.currentDate.getMonth();
+    const year = this.currentDate.getFullYear();
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
 
     const emptySlots = Array(firstDay).fill('<div class="calendar-day empty"></div>').join('');
 
@@ -89,8 +99,8 @@ class Calendar {
       const day = i + 1;
       const cls = [
         'calendar-day',
-        this._isToday(day)     ? 'today'    : '',
-        this._isSelected(day)  ? 'selected' : '',
+        this._isToday(day) ? 'today' : '',
+        this._isSelected(day) ? 'selected' : '',
       ].filter(Boolean).join(' ');
       const dot = this._hasEvents(day)
         ? '<div class="calendar-event-indicator"></div>' : '';
@@ -115,7 +125,7 @@ class Calendar {
         </button>
       </div>
       <div class="calendar-weekdays">
-        ${DAYS.map(d => `<div class="weekday">${d}</div>`).join('')}
+        ${DAYS.map((d) => `<div class="weekday">${d}</div>`).join('')}
       </div>
       <div class="calendar-days">
         ${emptySlots}${daySlots}

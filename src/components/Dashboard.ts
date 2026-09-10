@@ -2,22 +2,31 @@
  * Componente Dashboard
  * Renderiza os cards de métricas (KPIs) do painel.
  */
-class Dashboard {
-  constructor(containerId) {
+import type { DashboardCardData } from '../types';
+
+export class Dashboard {
+  container: HTMLElement | null;
+  cards: DashboardCardData[];
+
+  constructor(containerId: string) {
     this.container = document.getElementById(containerId);
     this.cards = [];
   }
 
-  addCard(card) { this.cards.push(card); return this; }
+  addCard(card: DashboardCardData): this {
+    this.cards.push(card);
+    return this;
+  }
 
-  render() {
+  render(): void {
+    if (!this.container) return;
     this.container.innerHTML = `
       <div class="dashboard-grid">
-        ${this.cards.map(c => this._renderCard(c)).join('')}
+        ${this.cards.map((c) => this._renderCard(c)).join('')}
       </div>`;
   }
 
-  _renderCard(card) {
+  private _renderCard(card: DashboardCardData): string {
     const color = card.color || 'var(--accent)';
     const trendHtml = card.trend
       ? `<div class="card-trend">
