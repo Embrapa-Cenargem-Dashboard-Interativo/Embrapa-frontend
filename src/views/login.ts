@@ -2,13 +2,121 @@
  * View: Login
  * Autenticação front-end com dois perfis (pesquisador / admin).
  */
-import type { Usuario } from '../types';
+import type { Usuario, PerfilUsuario } from '../types';
 
-const USERS: Usuario[] = [
+/** Senha padrão atribuída a usuários cadastrados pelo admin. */
+const DEFAULT_SENHA = 'embrapa123';
+
+const SEED_USERS: Usuario[] = [
   { id: 'U01', name: 'Dr. Rafael Lima',   role: 'pesquisador', login: 'pesquisador', senha: 'embrapa123' },
   { id: 'U02', name: 'Admin Cenargen',    role: 'admin',       login: 'admin',       senha: 'admin123'   },
   { id: 'U03', name: 'Dra. Ana Oliveira', role: 'pesquisador', login: 'ana',         senha: 'embrapa123' },
 ];
+
+/** Carrega usuários persistidos (seed + cadastrados pelo admin). */
+function loadUsers(): Usuario[] {
+  try {
+    const saved = localStorage.getItem('cenargen_users');
+    if (saved) {
+      const arr = JSON.parse(saved) as Usuario[];
+      if (Array.isArray(arr) && arr.length) return arr;
+    }
+  } catch {
+    /* ignora dados corrompidos */
+  }
+  return [...SEED_USERS];
+}
+
+function saveUsers(): void {
+  try {
+    localStorage.setItem('cenargen_users', JSON.stringify(USERS));
+  } catch {
+    /* storage indisponível */
+  }
+}
+
+const USERS: Usuario[] = loadUsers();
+
+function _nextUserId(): string {
+  let max = 0;
+  USERS.forEach((u) => {
+    const n = parseInt(u.id.replace(/\D/g, ''), 10);
+    if (!isNaN(n) && n > max) max = n;
+  });
+  return 'U' + String(max + 1).padStart(2, '0');
+}
+
+function _nameFromEmail(email: string): string {
+  const local = email.split('@')[0];
+  return local
+    .split(/[._-]+/)
+    .filter(Boolean)
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(' ') || email;
+}
+
+interface AddUserResult {
+  ok: boolean;
+  error?: string;
+  user?: Usuario;
+  senha?: string;
+}
+
+/** Máximo de administradores permitidos no sistema. */
+const MAX_ADMINS = 2;
+
+function _adminCount(): number {
+  return USERS.filter((u) => u.role === 'admin').length;
+}
+
+/**
+ * Cadastra um usuário a partir do e-mail (login) e perfil.
+ * O acesso é feito com o próprio e-mail e a senha padrão.
+ */
+function addUser(emailRaw: string, role: PerfilUsuario = 'pesquisador'): AddUserResult {
+  const email = (emailRaw || '').trim().toLowerCase();
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(email)) return { ok: false, error: 'Informe um e-mail válido.' };
+  if (USERS.some((u) => u.login.toLowerCase() === email)) {
+    return { ok: false, error: 'Já existe um usuário com este e-mail.' };
+  }
+  if (role === 'admin' && _adminCount() >= MAX_ADMINS) {
+    return { ok: false, error: `Limite de ${MAX_ADMINS} administradores atingido.` };
+  }
+  const user: Usuario = {
+    id: _nextUserId(),
+    name: _nameFromEmail(email),
+    role,
+    login: email,
+    senha: DEFAULT_SENHA,
+  };
+  USERS.push(user);
+  saveUsers();
+  return { ok: true, user, senha: DEFAULT_SENHA };
+}
+
+interface RemoveUserResult {
+  ok: boolean;
+  error?: string;
+  wasSelf?: boolean;
+}
+
+/**
+ * Remove um usuário. Um admin pode excluir pesquisadores e a si próprio,
+ * mas o sistema exige ao menos um administrador.
+ */
+function removeUser(id: string): RemoveUserResult {
+  const idx = USERS.findIndex((u) => u.id === id);
+  if (idx === -1) return { ok: false, error: 'Usuário não encontrado.' };
+  const u = USERS[idx];
+  if (u.role === 'admin' && _adminCount() <= 1) {
+    return { ok: false, error: 'É necessário manter ao menos um administrador.' };
+  }
+  const wasSelf = !!currentUser && currentUser.id === id;
+  USERS.splice(idx, 1);
+  saveUsers();
+  return { ok: true, wasSelf };
+}
 
 let currentUser: Usuario | null = null;
 
@@ -138,5 +246,7 @@ window.doLogoff = doLogoff;
 window.initAuth = initAuth;
 window.selectProfile = selectProfile;
 window.loginKeydown = loginKeydown;
+window.addUser = addUser;
+window.removeUser = removeUser;
 
-export { USERS, doLogin, doLogoff, initAuth, selectProfile, loginKeydown };
+export { USERS, addUser, removeUser, doLogin, doLogoff, initAuth, selectProfile, loginKeydown };

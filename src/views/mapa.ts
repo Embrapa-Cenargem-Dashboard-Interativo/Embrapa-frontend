@@ -85,6 +85,19 @@ function openPanel(id: string): void {
     estufa.status === 'manutencao' ? 'Em manutenção'    :
     estufa.status === 'ocupada'    ? 'Em uso'           : 'Sob reserva');
 
+  // Capacidade teórica de vasos (por tamanho)
+  const vbox = $('panel-vasos');
+  if (vbox) {
+    if (estufa.vasos) {
+      vbox.style.display = '';
+      setText('panel-vaso3', String(estufa.vasos.c3));
+      setText('panel-vaso5', String(estufa.vasos.c5));
+      setText('panel-vaso10', String(estufa.vasos.c10));
+    } else {
+      vbox.style.display = 'none';
+    }
+  }
+
   // Reserva vinculada (se houver)
   const reserva = reservas.find((r) => r.estufaId === id && r.status !== 'cancelada') || null;
   const rbox = $('panel-reserva');

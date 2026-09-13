@@ -7,6 +7,12 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+    // OneDrive/pastas sincronizadas não emitem eventos de FS confiáveis;
+    // o polling garante que o Vite recarregue ao salvar.
+    watch: {
+      usePolling: true,
+      interval: 300,
+    },
   },
   build: {
     outDir: 'dist',

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
   <!-- Base -->
   <link rel="stylesheet" href="styles/base.css"/>
@@ -454,6 +454,15 @@
               </div>
             </div>
 
+            <div class="panel-vasos" id="panel-vasos">
+              <div class="panel-vasos-title"><i class="fa-solid fa-flask"></i> Capacidade de vasos <span class="panel-vasos-hint">aprox.</span></div>
+              <div class="panel-vasos-grid">
+                <div class="panel-vaso"><span class="panel-vaso-num" id="panel-vaso3">&mdash;</span><span class="panel-vaso-lbl">3 cm</span></div>
+                <div class="panel-vaso"><span class="panel-vaso-num" id="panel-vaso5">&mdash;</span><span class="panel-vaso-lbl">5 cm</span></div>
+                <div class="panel-vaso"><span class="panel-vaso-num" id="panel-vaso10">&mdash;</span><span class="panel-vaso-lbl">10 cm</span></div>
+              </div>
+            </div>
+
             <div class="panel-reserva" id="panel-reserva" style="display:none">
               <div class="panel-reserva-head"><i class="fa-solid fa-calendar-check"></i> Reserva vinculada</div>
               <div class="panel-reserva-proj" id="panel-reserva-proj">&mdash;</div>
@@ -522,108 +531,86 @@
       <div class="admin-container">
 
         <div class="admin-page-header">
-          <div>
-            <div class="admin-page-title">
-              <i class="fa-solid fa-shield-halved"></i> Administração
-            </div>
-            <div class="admin-page-subtitle">Gestão completa de espaços, reservas e usuários</div>
-          </div>
-          <span class="pill pill-info"><i class="fa-solid fa-lock" style="font-size:8px"></i> Acesso Restrito</span>
-        </div>
-
-        <!-- Métricas -->
-        <div class="stats-row">
-          <div class="stat-item">
-            <div class="stat-icon" style="background:var(--bg);color:var(--muted2)">
-              <i class="fa-solid fa-warehouse"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="adm-total">—</div>
-              <div class="stat-label">Espaços Totais</div>
+          <div class="admin-head-left">
+            <div class="admin-head-badge"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <div class="admin-page-title">Administração</div>
+              <div class="admin-page-subtitle">Gestão completa de espaços, reservas e usuários</div>
             </div>
           </div>
-          <div class="stat-item">
-            <div class="stat-icon" style="background:var(--accent-lt);color:var(--accent)">
-              <i class="fa-solid fa-circle-check"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="adm-livres">—</div>
-              <div class="stat-label">Espaços Livres</div>
-            </div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon" style="background:var(--info-lt);color:var(--info)">
-              <i class="fa-solid fa-calendar"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="adm-reservas">—</div>
-              <div class="stat-label">Reservas Ativas</div>
-            </div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon" style="background:var(--warn-lt);color:var(--warn)">
-              <i class="fa-solid fa-chart-pie"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="adm-taxa">—</div>
-              <div class="stat-label">Taxa de Ocupação</div>
-            </div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon" style="background:var(--danger-lt);color:var(--danger)">
-              <i class="fa-solid fa-wrench"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="adm-manut">—</div>
-              <div class="stat-label">Em Manutenção</div>
-            </div>
+          <div class="admin-head-actions">
+            <button class="btn btn-ghost btn-sm" onclick="adminOpenMetrics()"><i class="fa-solid fa-chart-pie"></i> Painel</button>
+            <button class="btn btn-ghost btn-sm" onclick="adminOpenUsers()"><i class="fa-solid fa-users"></i> Usuários</button>
+            <button class="btn btn-primary btn-sm" onclick="adminOpenNewUser()"><i class="fa-solid fa-user-plus"></i> Cadastrar usuário</button>
+            <span class="pill pill-info"><i class="fa-solid fa-lock" style="font-size:8px"></i> Acesso Restrito</span>
           </div>
         </div>
 
-        <!-- Gestão de Espaços -->
-        <div class="admin-section">
-          <div class="admin-section-header">
-            <div class="admin-section-title">
-              <i class="fa-solid fa-warehouse"></i> Gestão de Espaços
-            </div>
-          </div>
-          <div class="admin-table-wrap">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th><th>Nome</th><th>Tipo</th><th>Área</th><th>Cap.</th>
-                  <th>Status</th><th style="text-align:right">Alterar Status</th>
-                </tr>
-              </thead>
-              <tbody id="adm-estufas-tbody"></tbody>
-            </table>
-          </div>
-        </div>
+        <!-- Duas colunas: Espaços | Reservas -->
+        <div class="admin-cols">
 
-        <!-- Todas as Reservas -->
-        <div class="admin-section">
-          <div class="admin-section-header">
-            <div class="admin-section-title">
-              <i class="fa-solid fa-calendar-check"></i> Todas as Reservas
+          <!-- Gestão de Espaços -->
+          <div class="admin-section" id="adm-sec-estufas">
+            <div class="admin-section-header">
+              <div class="admin-section-title">
+                <i class="fa-solid fa-warehouse"></i> Gestão de Espaços
+                <span class="adm-count" id="adm-estufas-count">0</span>
+              </div>
+              <div class="admin-section-tools">
+                <label class="adm-search">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="adm-estufas-search" placeholder="Buscar espaço…" oninput="adminBuscarEstufas(this.value)" aria-label="Buscar espaço"/>
+                  <button type="button" class="adm-search-clear is-hidden" id="adm-estufas-clear" aria-label="Limpar busca" onclick="adminLimparEstufas()"><i class="fa-solid fa-xmark"></i></button>
+                </label>
+              </div>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th><th>Nome</th><th>Tipo</th><th>Área</th><th>Cap.</th>
+                    <th>Status</th><th style="text-align:right">Alterar Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adm-estufas-tbody"></tbody>
+              </table>
             </div>
           </div>
-          <div class="admin-table-wrap">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th><th>Espaço</th><th>Projeto</th><th>Data</th><th>Qtd</th>
-                  <th>Status</th><th style="text-align:right">Ações</th>
-                </tr>
-              </thead>
-              <tbody id="adm-reservas-tbody"></tbody>
-            </table>
-          </div>
-        </div>
 
-        <!-- Usuários -->
-        <div class="admin-section">
-          <div class="admin-section-header">
-            <div class="admin-section-title">
-              <i class="fa-solid fa-users"></i> Usuários do Sistema
+          <!-- Todas as Reservas -->
+          <div class="admin-section" id="adm-sec-reservas">
+            <div class="admin-section-header">
+              <div class="admin-section-title">
+                <i class="fa-solid fa-calendar-check"></i> Todas as Reservas
+                <span class="adm-count" id="adm-reservas-count">0</span>
+              </div>
+              <div class="admin-section-tools">
+                <div class="adm-chips" role="tablist" aria-label="Filtrar reservas por status">
+                  <button class="adm-chip active" role="tab" aria-selected="true" data-status="todas" onclick="adminFiltrarReservas('todas', this)">Todas</button>
+                  <button class="adm-chip" role="tab" aria-selected="false" data-status="pendente" onclick="adminFiltrarReservas('pendente', this)">Pendentes<span class="adm-chip-badge is-hidden" id="adm-pend-badge">0</span></button>
+                  <button class="adm-chip" role="tab" aria-selected="false" data-status="ativa" onclick="adminFiltrarReservas('ativa', this)">Ativas</button>
+                </div>
+                <label class="adm-search">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="adm-reservas-search" placeholder="Buscar reserva…" oninput="adminBuscarReservas(this.value)" aria-label="Buscar reserva"/>
+                  <button type="button" class="adm-search-clear is-hidden" id="adm-reservas-clear" aria-label="Limpar busca" onclick="adminLimparReservas()"><i class="fa-solid fa-xmark"></i></button>
+                </label>
+              </div>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th><th>Espaço</th><th>Projeto</th><th>Data</th><th>Qtd</th>
+                    <th>Status</th><th style="text-align:right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="adm-reservas-tbody"></tbody>
+              </table>
             </div>
           </div>
-          <div class="admin-users-grid" id="adm-users-grid"></div>
-        </div>
+
+        </div><!-- /admin-cols -->
 
       </div>
     </div><!-- /view-admin -->
@@ -632,6 +619,109 @@
   </div><!-- /app-main -->
 
 </div><!-- /app-wrap -->
+
+<!-- ═══ MODAL: PAINEL / MÉTRICAS ═════════════════════════════ -->
+<div class="overlay" id="overlay-metrics">
+  <div class="modal modal-metrics">
+    <div class="modal-body">
+      <div class="modal-title"><i class="fa-solid fa-chart-pie" style="color:var(--accent);margin-right:6px"></i>Painel</div>
+      <div class="adm-metrics">
+        <div class="adm-metric is-total is-clickable" role="button" tabindex="0" title="Ver espaços" onclick="closeAll();adminGoto('estufas')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();closeAll();adminGoto('estufas')}">
+          <div class="adm-metric-icon"><i class="fa-solid fa-warehouse"></i></div>
+          <div class="adm-metric-info">
+            <div class="adm-metric-value" id="adm-total">—</div>
+            <div class="adm-metric-label">Espaços Totais</div>
+          </div>
+          <i class="fa-solid fa-arrow-right adm-metric-go"></i>
+        </div>
+        <div class="adm-metric is-free is-clickable" role="button" tabindex="0" title="Ver espaços" onclick="closeAll();adminGoto('estufas')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();closeAll();adminGoto('estufas')}">
+          <div class="adm-metric-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="adm-metric-info">
+            <div class="adm-metric-value" id="adm-livres">—</div>
+            <div class="adm-metric-label">Espaços Livres</div>
+          </div>
+          <i class="fa-solid fa-arrow-right adm-metric-go"></i>
+        </div>
+        <div class="adm-metric is-res is-clickable" role="button" tabindex="0" title="Ver reservas ativas" onclick="closeAll();adminGoto('reservas-ativa')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();closeAll();adminGoto('reservas-ativa')}">
+          <div class="adm-metric-icon"><i class="fa-solid fa-calendar"></i></div>
+          <div class="adm-metric-info">
+            <div class="adm-metric-value" id="adm-reservas">—</div>
+            <div class="adm-metric-label">Reservas Ativas</div>
+          </div>
+          <i class="fa-solid fa-arrow-right adm-metric-go"></i>
+        </div>
+        <div class="adm-metric is-rate">
+          <div class="adm-metric-icon"><i class="fa-solid fa-chart-pie"></i></div>
+          <div class="adm-metric-info">
+            <div class="adm-metric-value" id="adm-taxa">—</div>
+            <div class="adm-metric-label">Taxa de Ocupação</div>
+            <div class="adm-gauge"><div class="adm-gauge-fill" id="adm-taxa-bar"></div></div>
+          </div>
+        </div>
+        <div class="adm-metric is-maint is-clickable" role="button" tabindex="0" title="Ver espaços" onclick="closeAll();adminGoto('estufas')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();closeAll();adminGoto('estufas')}">
+          <div class="adm-metric-icon"><i class="fa-solid fa-wrench"></i></div>
+          <div class="adm-metric-info">
+            <div class="adm-metric-value" id="adm-manut">—</div>
+            <div class="adm-metric-label">Em Manutenção</div>
+          </div>
+          <i class="fa-solid fa-arrow-right adm-metric-go"></i>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: USUÁRIOS DO SISTEMA ═══════════════════════════ -->
+<div class="overlay" id="overlay-users">
+  <div class="modal modal-users">
+    <div class="modal-body">
+      <div class="modal-users-head">
+        <div class="modal-title" style="margin:0">
+          <i class="fa-solid fa-users" style="color:var(--accent);margin-right:6px"></i>Usuários do Sistema
+          <span class="adm-count" id="adm-users-count">0</span>
+        </div>
+        <button class="btn btn-primary btn-sm btn-xs" onclick="adminOpenNewUser()"><i class="fa-solid fa-user-plus"></i> Novo</button>
+      </div>
+      <div class="admin-users-grid" id="adm-users-grid"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CADASTRAR USUÁRIO ═════════════════════════════ -->
+<div class="overlay" id="overlay-new-user">
+  <div class="modal modal-new-user">
+    <div class="modal-body">
+      <div class="modal-title"><i class="fa-solid fa-user-plus" style="color:var(--accent);margin-right:6px"></i>Cadastrar usuário</div>
+      <div class="modal-desc">O sistema é restrito e não possui tela de cadastro. Informe o e-mail para liberar o acesso — o usuário entra com esse e-mail e a senha padrão.</div>
+
+      <div class="form-group">
+        <label class="form-label" for="new-user-email">E-mail do usuário</label>
+        <input class="form-control" type="email" id="new-user-email" placeholder="nome@embrapa.br" autocomplete="off"
+               oninput="document.getElementById('new-user-error').style.display='none'"
+               onkeydown="if(event.key==='Enter')adminCadastrarUsuario()"/>
+        <div class="form-hint" id="new-user-error" style="color:var(--danger);display:none"></div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Perfil de acesso</label>
+        <div class="seg" role="radiogroup" aria-label="Perfil de acesso">
+          <button type="button" class="seg-btn active" data-role="pesquisador" role="radio" aria-checked="true" onclick="adminSetNewRole('pesquisador', this)"><i class="fa-solid fa-user"></i> Pesquisador</button>
+          <button type="button" class="seg-btn" data-role="admin" role="radio" aria-checked="false" onclick="adminSetNewRole('admin', this)"><i class="fa-solid fa-user-shield"></i> Administrador</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAll()">Cancelar</button>
+      <button class="btn btn-primary" onclick="adminCadastrarUsuario()"><i class="fa-solid fa-check"></i> Cadastrar</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ MODAL: RESERVAR ══════════════════════════════════════ -->
 <div class="overlay" id="overlay-reservar">
