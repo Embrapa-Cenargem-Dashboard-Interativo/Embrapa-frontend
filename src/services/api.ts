@@ -9,10 +9,7 @@ function authHeaders() {
 
 export async function getCasasVegetacao() {
   const response = await fetch(`${API_URL}/casas-vegetacao?per_page=100`, {
-    headers: {
-      "Accept": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("token")}`,
-    },
+    headers: authHeaders(),
   });
   if (!response.ok) {
     throw new Error("Erro ao buscar casas de vegetação");
@@ -22,10 +19,7 @@ export async function getCasasVegetacao() {
 
 export async function getReservas() {
   const response = await fetch(`${API_URL}/reservas`, {
-    headers: {
-      "Accept": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("token")}`,
-    },
+    headers: authHeaders(),
   });
   if (!response.ok) throw new Error("Erro ao buscar reservas");
   return response.json();
