@@ -11,6 +11,13 @@ export type StatusKey = EstufaStatus | ReservaStatus;
 
 export type PerfilUsuario = 'admin' | 'pesquisador';
 
+/** Capacidade teórica (aproximada) de vasos por tamanho. */
+export interface VasosCapacidade {
+  c3: number;   // vasos de 3 cm
+  c5: number;   // vasos de 5 cm
+  c10: number;  // vasos de 10 cm
+}
+
 export interface Estufa {
   nome: string;
   tipo: string;
@@ -20,6 +27,7 @@ export interface Estufa {
   cap: number;
   icon: string;
   desc: string;
+  vasos?: VasosCapacidade;
 }
 
 /** Mapa de estufas indexado pelo código (ex.: "E01"). */

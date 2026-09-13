@@ -503,3 +503,68 @@
   .legend-row       { font-size: 11px; }
   .hs-name          { display: none; }
 }
+
+/* ─── Capacidade de vasos (painel de detalhes) ───────────── */
+
+.panel-vasos {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--rs);
+}
+
+.panel-vasos-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.panel-vasos-title i { color: var(--accent); font-size: 12px; }
+
+.panel-vasos-hint {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--muted2);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.panel-vasos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.panel-vaso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.panel-vaso-num {
+  font-family: var(--fh);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -.3px;
+}
+
+.panel-vaso-lbl {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}

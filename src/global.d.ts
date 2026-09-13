@@ -5,7 +5,7 @@
  */
 import type { Calendar } from './components/Calendar';
 import type { Dashboard } from './components/Dashboard';
-import type { Estufas, Reserva, Usuario, StatusInfo } from './types';
+import type { Estufas, Reserva, Usuario, StatusInfo, PerfilUsuario } from './types';
 
 declare global {
   interface Window {
@@ -37,6 +37,8 @@ declare global {
     initAuth: () => void;
     selectProfile: (role: string) => void;
     loginKeydown: (e: KeyboardEvent) => void;
+    addUser: (email: string, role?: PerfilUsuario) => { ok: boolean; error?: string; user?: Usuario; senha?: string };
+    removeUser: (id: string) => { ok: boolean; error?: string; wasSelf?: boolean };
 
     // Mapa (mapa.ts)
     openPanel: (id: string) => void;
@@ -59,6 +61,18 @@ declare global {
     adminSetStatus: (id: string, status: string) => void;
     adminAprovarReserva: (id: string) => void;
     adminCancelarReserva: (id: string) => void;
+    adminBuscarEstufas: (q: string) => void;
+    adminBuscarReservas: (q: string) => void;
+    adminFiltrarReservas: (status: 'todas' | 'pendente' | 'ativa', el?: HTMLElement) => void;
+    adminLimparEstufas: () => void;
+    adminLimparReservas: () => void;
+    adminGoto: (target: 'estufas' | 'reservas' | 'reservas-ativa' | 'reservas-pendente') => void;
+    adminOpenMetrics: () => void;
+    adminOpenUsers: () => void;
+    adminOpenNewUser: () => void;
+    adminSetNewRole: (role: PerfilUsuario, el?: HTMLElement) => void;
+    adminCadastrarUsuario: () => void;
+    adminExcluirUsuario: (id: string) => void;
   }
 }
 
