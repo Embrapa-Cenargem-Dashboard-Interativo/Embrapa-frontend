@@ -5,7 +5,7 @@
 import { ESTUFAS, reservas } from './data/estufas';
 import { Calendar } from './components/Calendar';
 import { Dashboard } from './components/Dashboard';
-import { updateEstufaOnMap, closePopup } from './views/mapa';
+import { renderHotspots, updateEstufaOnMap, closePopup } from './views/mapa';
 import { renderReservasList } from './views/reservas';
 import { renderAdmin } from './views/admin';
 import { initAuth } from './views/login';
@@ -152,6 +152,7 @@ function renderDayEvents(date: Date): void {
 // ─── Init: Restaurar estado visual do mapa ───────────────
 
 function initMapState(): void {
+  renderHotspots();
   Object.keys(ESTUFAS).forEach((id) => updateEstufaOnMap(id));
 }
 

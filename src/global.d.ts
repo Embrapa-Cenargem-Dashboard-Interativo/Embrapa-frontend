@@ -47,6 +47,7 @@ declare global {
     closePopup: () => void;
     updateEstufaOnMap: (id: string) => void;
     syncHotspots: () => void;
+    renderHotspots: () => void;
 
     // Reservas (reservas.ts)
     openReservarModal: () => void;

@@ -4,6 +4,7 @@
  * detalhes que desliza da direita ao clicar numa estufa.
  */
 import { ESTUFAS, STATUS_MAP, reservas } from '../data/estufas';
+import { HOTSPOTS } from '../data/hotspots';
 import type { Estufa } from '../types';
 
 let activeEstufaId: string | null = null;
@@ -175,6 +176,42 @@ function updateEstufaOnMap(id: string): void {
   }
 }
 
+// ─── Render dos marcadores ───────────────────────────────
+
+/**
+ * Monta os 50 marcadores dentro de #map-hotspots a partir de HOTSPOTS.
+ * Substitui o bloco de <div> repetidos que existia no index.html.
+ */
+function renderHotspots(): void {
+  const overlay = $('map-hotspots');
+  if (!overlay) return;
+
+  overlay.innerHTML = '';
+  const frag = document.createDocumentFragment();
+
+  HOTSPOTS.forEach(({ id, left, top }) => {
+    const estufa = ESTUFAS[id];
+    const hs = document.createElement('div');
+    hs.className = 'estufa-hotspot' + (estufa ? ' st-' + estufa.status : '');
+    hs.dataset.id = id;
+    hs.style.left = left + '%';
+    hs.style.top = top + '%';
+    hs.addEventListener('click', () => openPanel(id));
+
+    const name = document.createElement('div');
+    name.className = 'hs-name';
+    name.textContent = estufa ? estufa.nome : id;
+
+    const dot = document.createElement('div');
+    dot.className = 'hs-dot';
+
+    hs.append(name, dot);
+    frag.appendChild(hs);
+  });
+
+  overlay.appendChild(frag);
+}
+
 // ─── Layer de hotspots cobre a imagem ────────────────────
 
 function syncHotspots(): void {
@@ -215,5 +252,6 @@ window.openPopup = openPopup;
 window.closePopup = closePopup;
 window.updateEstufaOnMap = updateEstufaOnMap;
 window.syncHotspots = syncHotspots;
+window.renderHotspots = renderHotspots;
 
-export { openPanel, closePanel, openPopup, closePopup, updateEstufaOnMap, syncHotspots };
+export { openPanel, closePanel, openPopup, closePopup, updateEstufaOnMap, syncHotspots, renderHotspots };
