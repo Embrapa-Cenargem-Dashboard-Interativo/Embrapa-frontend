@@ -743,25 +743,33 @@
           <div class="meta-value" id="reservar-cap">—</div>
         </div>
       </div>
+
       <div class="form-row" style="margin-bottom:14px">
         <div class="form-group" style="margin:0">
-          <label class="form-label">Data de Reserva</label>
-          <input type="date" class="form-control" id="reservar-data"/>
+          <label class="form-label">Data Início</label>
+          <input type="date" class="form-control" id="reservar-data-inicio"/>
         </div>
         <div class="form-group" style="margin:0">
-          <label class="form-label">Qtd. de Vasos/Estantes</label>
-          <input type="number" class="form-control" id="reservar-qtd" placeholder="Ex: 5" min="1"/>
-          <div class="form-hint" id="reservar-limite">Limite: —</div>
+          <label class="form-label">Data Fim</label>
+          <input type="date" class="form-control" id="reservar-data-fim"/>
         </div>
       </div>
+
       <div class="form-group">
         <label class="form-label">Projeto vinculado</label>
-        <select class="form-control" id="reservar-proj">
+        <select class="form-control" id="reservar-projeto">
           <option value="">Selecionar projeto…</option>
-          <option>CRISPR-Soja: Resistência a Nematódeos</option>
-          <option>Biofortificação em Feijão</option>
-          <option>Resistência Fúngica em Arroz</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Finalidade</label>
+        <input type="text" class="form-control" id="reservar-finalidade" placeholder="Ex: Ensaio de resistência a nematódeos"/>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Observações <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+        <input type="text" class="form-control" id="reservar-obs" placeholder="Ex: Necessário acesso irrigação automática"/>
       </div>
     </div>
     <div class="modal-footer">
@@ -785,12 +793,12 @@
       <div class="modal-desc"  id="ver-desc">—</div>
       <div class="modal-meta-grid">
         <div>
-          <div class="meta-label">Data de Reserva</div>
+          <div class="meta-label">Data Início</div>
           <div class="meta-value" id="ver-data">—</div>
         </div>
         <div>
-          <div class="meta-label">Qtd. Vasos/Estantes</div>
-          <div class="meta-value" id="ver-qtd">—</div>
+          <div class="meta-label">Data Fim</div>
+          <div class="meta-value" id="ver-data-fim">—</div>
         </div>
         <div>
           <div class="meta-label">Projeto</div>
@@ -798,7 +806,7 @@
         </div>
         <div>
           <div class="meta-label">Pesquisador</div>
-          <div class="meta-value" id="ver-researcher" style="font-size:11.5px">Dr. Rafael Lima</div>
+          <div class="meta-value" id="ver-researcher" style="font-size:11.5px">—</div>
         </div>
       </div>
     </div>

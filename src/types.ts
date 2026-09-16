@@ -36,9 +36,12 @@ export type Estufas = Record<string, Estufa>;
 export interface Reserva {
   id: string;
   estufaId: string;
-  data: string; // formato YYYY-MM-DD
-  qtd: number;
-  projeto: string;
+  data: string;       // data_inicio, YYYY-MM-DD
+  dataFim: string;     // NOVO: data_fim, YYYY-MM-DD
+  qtd: number;          // mantido por compat, mas não é mais usado no form
+  projeto: string;       // código do projeto (exibição)
+  pesquisador?: string;   // NOVO: nome do funcionário dono da reserva
+  finalidade?: string;    // NOVO
   status: ReservaStatus;
 }
 
