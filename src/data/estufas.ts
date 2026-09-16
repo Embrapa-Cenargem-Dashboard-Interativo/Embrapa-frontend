@@ -3,15 +3,16 @@ import { getCasasVegetacao, getReservas as apiGetReservas } from '../services/ap
 
 export const ESTUFAS: Estufas = {};
 export const reservas: Reserva[] = [];
+export const RESERVA_ID_REAL: Record<string, number> = {};
 
 export const STATUS_MAP: Record<string, StatusInfo> = {
-  livre:      { label: 'Livre',       cls: 'pill-green',  icon: 'fa-circle-check'  },
-  ocupada:    { label: 'Ocupada',     cls: 'pill-warn',   icon: 'fa-house-leaf'    },
-  reservada:  { label: 'Reservada',   cls: 'pill-info',   icon: 'fa-calendar'      },
-  manutencao: { label: 'Manutenção',  cls: 'pill-danger', icon: 'fa-wrench'        },
-  ativa:      { label: 'Ativa',       cls: 'pill-green',  icon: 'fa-circle-check'  },
-  pendente:   { label: 'Pendente',    cls: 'pill-warn',   icon: 'fa-clock'         },
-  cancelada:  { label: 'Cancelada',   cls: 'pill-danger', icon: 'fa-xmark'         },
+  livre: { label: 'Livre', cls: 'pill-green', icon: 'fa-circle-check' },
+  ocupada: { label: 'Ocupada', cls: 'pill-warn', icon: 'fa-house-leaf' },
+  reservada: { label: 'Reservada', cls: 'pill-info', icon: 'fa-calendar' },
+  manutencao: { label: 'Manutenção', cls: 'pill-danger', icon: 'fa-wrench' },
+  ativa: { label: 'Ativa', cls: 'pill-green', icon: 'fa-circle-check' },
+  pendente: { label: 'Pendente', cls: 'pill-warn', icon: 'fa-clock' },
+  cancelada: { label: 'Cancelada', cls: 'pill-danger', icon: 'fa-xmark' },
 };
 
 function calcularStatus(casaId: string, ativa: boolean): Estufas[string]['status'] {
@@ -22,6 +23,8 @@ function calcularStatus(casaId: string, ativa: boolean): Estufas[string]['status
   );
   return temReservaHoje ? 'ocupada' : 'livre';
 }
+
+export const CASA_ID_REAL: Record<string, number> = {};
 
 export async function loadState(): Promise<void> {
   try {
@@ -35,13 +38,13 @@ export async function loadState(): Promise<void> {
 
     const casasData = (casasResponse.data ?? casasResponse)
       .slice()
-      .sort((a: any, b: any) => a.id - b.id); // garante ordem por ID real, não pela ordenação do backend
+      .sort((a: any, b: any) => a.id - b.id);
 
-    // Mapa: id real do banco -> chave E01, E02... (baseado na POSIÇÃO, não no valor do id)
     const idParaChave: Record<number, string> = {};
     casasData.forEach((c: any, index: number) => {
       const chave = `E${String(index + 1).padStart(2, '0')}`;
       idParaChave[c.id] = chave;
+      CASA_ID_REAL[chave] = c.id; // guarda o id real pra usar depois no POST de reserva
 
       ESTUFAS[chave] = {
         nome: c.descricao,
@@ -57,13 +60,19 @@ export async function loadState(): Promise<void> {
 
     const reservasData = reservasResponse.data ?? reservasResponse;
     reservasData.forEach((r: any) => {
+      const chaveLocal = `R${String(r.id).padStart(3, '0')}`;
+      RESERVA_ID_REAL[chaveLocal] = r.id;
+
       reservas.push({
-        id: `R${String(r.id).padStart(3, '0')}`,
+        id: chaveLocal,
         estufaId: idParaChave[r.casa_vegetacao_id] ?? `E${String(r.casa_vegetacao_id).padStart(2, '0')}`,
         data: r.data_inicio?.slice(0, 10) ?? '',
-        qtd: r.quantidade ?? 0,
-        projeto: r.projeto?.codigo ?? r.projeto_id ?? '',
-        status: r.status ?? 'ativa',
+        dataFim: r.data_fim?.slice(0, 10) ?? '',
+        qtd: 0,
+        projeto: r.projeto?.codigo ?? String(r.projeto_id ?? ''),
+        pesquisador: r.funcionario?.nome ?? '—',
+        finalidade: r.finalidade ?? '',
+        status: String(r.status ?? 'ATIVA').toLowerCase() === 'cancelada' ? 'cancelada' : 'ativa',
       });
     });
   } catch (e) {

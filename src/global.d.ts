@@ -14,7 +14,7 @@ declare global {
     reservas: Reserva[];
     STATUS_MAP: Record<string, StatusInfo>;
     USERS: Usuario[];
-    currentUser: Usuario | null;
+    currentUser: FuncionarioLogado | null;
     calendarInstance?: Calendar;
 
     // Classes

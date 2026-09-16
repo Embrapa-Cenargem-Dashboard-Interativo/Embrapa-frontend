@@ -28,10 +28,11 @@ function openReservarModal(): void {
     return;
   }
 
-  const status = STATUS_MAP[estufa.status];
   const setHtml = (id: string, html: string) => { const el = $(id); if (el) el.innerHTML = html; };
   const setText = (id: string, text: string) => { const el = $(id); if (el) el.textContent = text; };
   const setValue = (id: string, value: string) => { const el = $(id) as HTMLInputElement | null; if (el) el.value = value; };
+
+  const status = STATUS_MAP[estufa.status];
 
   setHtml('reservar-img-icon', `<i class="fa-solid ${estufa.icon}"></i>`);
   const badge = $('reservar-badge');
@@ -39,6 +40,7 @@ function openReservarModal(): void {
     badge.innerHTML = `<i class="fa-solid ${status.icon}" style="font-size:8px"></i> ${status.label}`;
     badge.className = `pill ${status.cls}`;
   }
+
   setText('reservar-title', estufa.nome);
   setText('reservar-desc', estufa.desc);
   setText('reservar-area', estufa.area);
@@ -72,7 +74,7 @@ function confirmarReserva(): void {
   }
 
   const newId = 'R' + String(reservas.length + 1).padStart(3, '0');
-  reservas.push({ id: newId, estufaId: activeEstufaId, data, qtd: +qtd, projeto: proj, status: 'pendente' });
+  reservas.push({ id: newId, estufaId: activeEstufaId, data, dataFim: data, qtd: +qtd, projeto: proj, status: 'pendente' as any });
 
   estufa.status = 'reservada';
   updateEstufaOnMap(activeEstufaId);
